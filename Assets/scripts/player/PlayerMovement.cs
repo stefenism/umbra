@@ -1,8 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
     
     public Rigidbody2D rb;
+    public Animator anim;
+    public BoxCollider2D boxCollider;
     private float horizontalMovement;
     private float verticalMovement;
     public PlayerStateManager playerState;
@@ -38,9 +42,13 @@ public class PlayerMovement : MonoBehaviour {
     public float gravityDropModifier = 2;
     public float airSpeed = 2f;
 
+    public List<Vector3> hitPositions = new List<Vector3>();
+
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
         playerState = GetComponent<PlayerStateManager>();
+        anim = GetComponent<Animator>();
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     private void Update() {
@@ -184,6 +192,18 @@ public class PlayerMovement : MonoBehaviour {
     public void setGroundMode(){
 
     }
+
+    public List<Vector3> getPlayerHitPositions(){
+		getHitPositions();
+		return hitPositions;
+	}
+
+    public void getHitPositions(){
+		hitPositions.Clear();
+		hitPositions.Add(new Vector3(transform.position.x + boxCollider.bounds.extents.x, transform.position.y, transform.position.z));
+		hitPositions.Add(new Vector3(transform.position.x - boxCollider.bounds.extents.x, transform.position.y, transform.position.z));
+		hitPositions.Add(transform.position);
+	}
 
     public void setGravityScale(float newScale){rb.gravityScale = newScale;}
 
