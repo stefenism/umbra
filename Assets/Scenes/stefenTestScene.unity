@@ -251,9 +251,9 @@ GameObject:
   - component: {fileID: 709583087}
   - component: {fileID: 709583089}
   - component: {fileID: 709583088}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: floor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -360,9 +360,9 @@ GameObject:
   - component: {fileID: 932383205}
   - component: {fileID: 932383207}
   - component: {fileID: 932383206}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ceiling
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -469,9 +469,9 @@ GameObject:
   - component: {fileID: 1277787354}
   - component: {fileID: 1277787356}
   - component: {fileID: 1277787355}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: wall
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -578,9 +578,9 @@ GameObject:
   - component: {fileID: 1752953025}
   - component: {fileID: 1752953027}
   - component: {fileID: 1752953026}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: wall (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -690,6 +690,7 @@ GameObject:
   - component: {fileID: 1946443680}
   - component: {fileID: 1946443679}
   - component: {fileID: 1946443684}
+  - component: {fileID: 1946443685}
   m_Layer: 0
   m_Name: umbra
   m_TagString: Untagged
@@ -807,8 +808,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf886086347e4c476afa153438dba4db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   playerState: {fileID: 0}
   runSpeed: 2
+  grounded: 0
+  jumpForce: 2
+  jumpTime: 0.3
+  airDrag: 1
+  gravityDropModifier: 2
+  airSpeed: 2
 --- !u!4 &1946443683
 Transform:
   m_ObjectHideFlags: 0
@@ -835,3 +843,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d22cda5d5dbadf648c5f41ce47e197c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1946443685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946443678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79f3b4681b19248f997d58a76ebb3ca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundDistance: 0.37
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  width: 0
+  height: 0
