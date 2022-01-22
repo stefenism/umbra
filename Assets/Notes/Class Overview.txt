@@ -1,0 +1,19 @@
+Object	->	Combatant	->	Shadow (playable character)
+						- Emerge() : exit shadow-mode, lowering capabilities
+						- Withraw() : re-enter shadow-mode, regaining capabilities
+						- Swipe : create swiping collision box
+						- Collide(Bullet) : take damage
+						- bool Visible : determine if in Light (just toggle with emerge/withdraw?)
+			- Collide(Wall|Ceil|Floor) : get BLOCKED
+			- Interact(Interactable) : call Interactable.Interact(this)
+			- Damage(amount?)
+			- Kill()
+				->	Enemy
+						- Alert(player) : aim at player according to player.position
+						- Fire(player) : fire Bullet at player
+						- Decide() : determines next AI movement/action, called by Update
+						- Collide(Swipe) : take damage
+						- Collide(Grab?) : move rapidly toward Shadow
+	->	Interactable	-> Light Switch : interact => toggle on/off
+				-> Box : interact => move tiny distance away from player (can they pull boxes?)
+				-> Door : interact => open/close
