@@ -1,26 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightObject : MonoBehaviour
-{
+public class LightObject : MonoBehaviour {
 
-    private Light light;
-
-    private void Awake() {
-        light = GetComponent<Light>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private Light light; //Change to Light2D
+    private bool lightOn;
+    void Awake() {
+        light = GetComponent<Light>(); //Needs to be changed to Light2D
     }
 
     public double GetInnerRaidus() {
@@ -39,29 +27,38 @@ public class LightObject : MonoBehaviour
 
     public bool IsGameObjectInOuterLight(GameObject player) {
         var distance = GetDistanceFromGameObject(player);
-        return  distance - GetOuterRadius() < 0 && distance - GetInnerRaidus() > 0;
+        return distance - GetOuterRadius() < 0 && distance - GetInnerRaidus() > 0;
     }
 
     public bool IsGameObjectInInnerLight(GameObject player) {
         return GetDistanceFromGameObject(player) - GetInnerRaidus() < 0;
     }
 
-    public bool IsGameObjectInLight(GameObject player) {
-        return IsGameObjectInOuterLight(player) || IsGameObjectInInnerLight(player);
-    }
-
     //Returns true if ray cast could hit the player
-    public bool RaytraceToGameObject(GameObject player) {
-        float maxRange = 5;
+    public bool IsGameObjectWithinLight(GameObject player) {
         RaycastHit2D hit;
         if (GetDistanceFromGameObject(player) < GetOuterRadius()) {
-            //if (Physics.Raycast(light.gameObject.transform.position, (player.transform.position - light.gameObject.transform.position), out hit, 5f)) {
-
-            //}
-            return true;
+            hit = Physics2D.Raycast(light.gameObject.transform.position, (player.transform.position - light.gameObject.transform.position), (float)GetOuterRadius());
+            if (hit.collider != null && hit.collider == player) { //Hit GameObject
+                return true;
+            }
         }
-
         return false;
+    }
+
+    public bool IsLightOn() {
+        return lightOn;
+    }
+
+    public bool ToggleLight() {
+        lightOn = !lightOn;
+        UpdateLight();
+        return lightOn;
+    }
+    
+
+    public void UpdateLight() {
+        light.enabled = lightOn;
     }
 
 }

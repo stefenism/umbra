@@ -2,14 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractableObject : MonoBehaviour
+public class Box : MonoBehaviour
 {
-
-    public bool currentState;
-
-    private void Awake() {
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -21,10 +15,4 @@ public class InteractableObject : MonoBehaviour
     {
         
     }
-
-    public virtual void Interact(Combatant cmb) {
-        
-    }
-
 }
-
