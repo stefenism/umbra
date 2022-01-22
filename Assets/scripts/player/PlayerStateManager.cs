@@ -9,6 +9,8 @@ public class PlayerStateManager : MonoBehaviour {
         DEAD
     }
 
+    public bool HasEnemeyGrappled;
+
     private PlayerState playerState = PlayerState.LIGHT;
     private PlayerMovement mover;
 
