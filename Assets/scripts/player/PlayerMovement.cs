@@ -227,6 +227,9 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     void Jump() {
+        if (playerState.HasEnemeyGrappled) { //Can't jump if enemy in hands
+            return;
+        }
         Debug.Log("jumping now");
         Vector2 jumpVector = rb.velocity;
         jumpVector.y = jumpForce;

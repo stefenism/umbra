@@ -8,12 +8,14 @@ public class LightObject : MonoBehaviour {
 
     private Light2D lightObj;
     public bool lightOn = true;
+    private LayerMask ignoreMask;
 
     void Awake() {
         lightObj = GetComponent<Light2D>();
         if (!lightOn) {
             lightObj.enabled = false;
         }
+        ignoreMask = LayerMask.GetMask("Enemy");
     }
 
     public double GetInnerRaidus() {
@@ -43,11 +45,7 @@ public class LightObject : MonoBehaviour {
             return false;
         RaycastHit2D hit;
         if (GetDistanceFromGameObject(player) < GetOuterRadius()) {
-            float angle = Vector2.Angle(lightObj.gameObject.transform.up, player.gameObject.transform.position);
-           // if (Input.GetKeyDown("q")) {
-                //Debug.Log(angle);
-            //}
-            hit = Physics2D.Raycast(lightObj.gameObject.transform.position, (player.transform.position - lightObj.gameObject.transform.position), (float)GetOuterRadius());
+            hit = Physics2D.Raycast(lightObj.gameObject.transform.position, (player.transform.position - lightObj.gameObject.transform.position), (float)GetOuterRadius(), ~ignoreMask);
             if (hit.collider != null && hit.collider.gameObject == player) { //Hit GameObject
                 return true;
             }

@@ -5,9 +5,10 @@ using UnityEngine;
 public class Player : Combatant {
 
     private List<InteractableObject> nearObjects;
+    private Enemy enemyInRange;
     private LightObject[] lights;
     private PlayerStateManager stateManager;
-
+    private Enemy grappledEnemy;
 
     private void Awake() {
         lights = FindObjectsOfType<LightObject>();
@@ -18,15 +19,26 @@ public class Player : Combatant {
     // Update is called once per frame
     void Update() {
         if (IsInLight()) {
-           // if (!stateManager.IsPlayerInLight())
-                //stateManager.SetPlayerInLight();
+           if (!stateManager.IsPlayerInLight())
+               stateManager.SetPlayerInLight();
         } else {
-            if (!stateManager.IsPlayerInDark())
+            if (!stateManager.IsPlayerInDark()) {
                 stateManager.SetPlayerInDark();
+                if (stateManager.HasEnemeyGrappled) {
+                    grappledEnemy.Kill();
+                    grappledEnemy.transform.parent = null;
+                    Destroy(grappledEnemy.gameObject);
+                    stateManager.HasEnemeyGrappled = false;
+                    grappledEnemy = null;
+                }
+            }
         }
 
         if (Input.GetKeyDown("e")) {
             Interact();
+        }
+        if (Input.GetMouseButtonDown(0)) {
+            GrappleEnemy();
         }
         //Check for interact key press
     }
@@ -37,8 +49,10 @@ public class Player : Combatant {
         if (collision.gameObject.TryGetComponent<InteractableObject>(out InteractableObject interactableObject)) {
             if (!nearObjects.Contains(interactableObject)) {
                 nearObjects.Add(interactableObject);
-                Debug.Log("Found interactable");
             }
+        }
+        if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy)) {
+            enemyInRange = enemy;
         }
     }
 
@@ -47,6 +61,9 @@ public class Player : Combatant {
             if (nearObjects.Contains(interactableObject))
                 nearObjects.Remove(interactableObject);
         }
+        if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy)) {
+            enemyInRange = null;
+        }
     }
 
     private void Interact() {
@@ -54,12 +71,21 @@ public class Player : Combatant {
             nearObjects[0].Interact(this);
     }
 
-    public void SwipeAttack() {
+    public void GrappleEnemy() {
+        if (enemyInRange == null) {
+            //Play miss/grabble animation?
+            return;
+        }
 
-    }
-
-    public void GrappleEnemy(Enemy cmb) {
-
+        if (stateManager.IsPlayerInLight() && grappledEnemy == null) {
+            //Play big boy grapple
+            stateManager.HasEnemeyGrappled = true;
+            grappledEnemy = enemyInRange;
+            grappledEnemy.transform.parent = transform;
+        }else if (stateManager.IsPlayerInDark() && grappledEnemy == null) {
+            //Just kill the baddy
+            enemyInRange.Kill();
+        }
     }
 
     public bool IsInLight() {
@@ -67,7 +93,7 @@ public class Player : Combatant {
             if (light.IsGameObjectWithinLight(this.gameObject))
                 return true;
         }
-        return false; //Try building collision around all the lights?
+        return false;
     }
 
 }
