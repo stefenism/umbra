@@ -54,7 +54,7 @@ public class Enemy : Combatant
     }
 
     public void Shoot() {
-        Bullet bull = Instantiate(bullet, gameObject.transform.position, gameObject.transform.rotation);
+        //Bullet bull = Instantiate(bullet, gameObject.transform.position, gameObject.transform.rotation);
     }
 
     public void Wander() {

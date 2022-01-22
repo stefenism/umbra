@@ -43,13 +43,24 @@ public class LightObject : MonoBehaviour {
             return false;
         RaycastHit2D hit;
         if (GetDistanceFromGameObject(player) < GetOuterRadius()) {
-            //float angle = Vector2.Angle(lightObj.gameObject.transform.up, player.gameObject.transform.position);
+            float angle = Vector2.Angle(lightObj.gameObject.transform.up, player.gameObject.transform.position);
+           // if (Input.GetKeyDown("q")) {
+                //Debug.Log(angle);
+            //}
             hit = Physics2D.Raycast(lightObj.gameObject.transform.position, (player.transform.position - lightObj.gameObject.transform.position), (float)GetOuterRadius());
             if (hit.collider != null && hit.collider.gameObject == player) { //Hit GameObject
                 return true;
             }
         }
         return false;
+    }
+
+
+    public Vector2 DirFromAngle(float angleInDegrees, bool angleIsGlobal) {
+        if (!angleIsGlobal) {
+            angleInDegrees += transform.eulerAngles.z;
+        }
+        return new Vector2(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0);
     }
 
     public bool IsLightOn() {
