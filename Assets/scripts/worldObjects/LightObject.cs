@@ -2,27 +2,30 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class LightObject : MonoBehaviour {
 
-    private Light light; //Change to Light2D
-    private bool lightOn;
+    private Light2D lightObj;
+    public bool lightOn = true;
+
     void Awake() {
-        light = GetComponent<Light>(); //Needs to be changed to Light2D
+        lightObj = GetComponent<Light2D>();
+        if (!lightOn) {
+            lightObj.enabled = false;
+        }
     }
 
     public double GetInnerRaidus() {
-        return 0;
-        //return light.point
+        return lightObj.pointLightInnerRadius;
     }
 
     public double GetOuterRadius() {
-        return 0;
-        //return light.GetOuterRadius();
+        return lightObj.pointLightOuterRadius;
     }
 
     public double GetDistanceFromGameObject(GameObject player) {
-        return Vector2.Distance(light.gameObject.transform.position, player.transform.position);
+        return Vector2.Distance(lightObj.gameObject.transform.position, player.transform.position);
     }
 
     public bool IsGameObjectInOuterLight(GameObject player) {
@@ -36,10 +39,13 @@ public class LightObject : MonoBehaviour {
 
     //Returns true if ray cast could hit the player
     public bool IsGameObjectWithinLight(GameObject player) {
+        if (!lightOn) 
+            return false;
         RaycastHit2D hit;
         if (GetDistanceFromGameObject(player) < GetOuterRadius()) {
-            hit = Physics2D.Raycast(light.gameObject.transform.position, (player.transform.position - light.gameObject.transform.position), (float)GetOuterRadius());
-            if (hit.collider != null && hit.collider == player) { //Hit GameObject
+            //float angle = Vector2.Angle(lightObj.gameObject.transform.up, player.gameObject.transform.position);
+            hit = Physics2D.Raycast(lightObj.gameObject.transform.position, (player.transform.position - lightObj.gameObject.transform.position), (float)GetOuterRadius());
+            if (hit.collider != null && hit.collider.gameObject == player) { //Hit GameObject
                 return true;
             }
         }
@@ -55,10 +61,9 @@ public class LightObject : MonoBehaviour {
         UpdateLight();
         return lightOn;
     }
-    
 
     public void UpdateLight() {
-        light.enabled = lightOn;
+        lightObj.enabled = lightOn;
     }
 
 }

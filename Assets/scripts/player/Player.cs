@@ -5,14 +5,29 @@ using UnityEngine;
 public class Player : Combatant {
 
     private List<InteractableObject> nearObjects;
+    private LightObject[] lights;
+    private PlayerStateManager stateManager;
 
-    // Start is called before the first frame updateasdf
-    void Start() {
 
+    private void Awake() {
+        lights = FindObjectsOfType<LightObject>();
+        stateManager = GetComponent<PlayerStateManager>();
+        nearObjects = new List<InteractableObject>();
     }
 
     // Update is called once per frame
     void Update() {
+        if (IsInLight()) {
+            if (!stateManager.IsPlayerInLight())
+                stateManager.SetPlayerInLight();
+        } else {
+            if (!stateManager.IsPlayerInDark())
+                stateManager.SetPlayerInDark();
+        }
+
+        if (Input.GetKeyDown("e")) {
+            Interact();
+        }
         //Check for interact key press
     }
 
@@ -20,8 +35,10 @@ public class Player : Combatant {
         if (collision.gameObject.TryGetComponent<Bullet>(out Bullet bullet))
             Damage(bullet.Damage);
         if (collision.gameObject.TryGetComponent<InteractableObject>(out InteractableObject interactableObject)) {
-            if (!nearObjects.Contains(interactableObject))
+            if (!nearObjects.Contains(interactableObject)) {
                 nearObjects.Add(interactableObject);
+                Debug.Log("Found interactable");
+            }
         }
     }
 
@@ -46,8 +63,11 @@ public class Player : Combatant {
     }
 
     public bool IsInLight() {
+        foreach (LightObject light in lights) {
+            if (light.IsGameObjectWithinLight(this.gameObject))
+                return true;
+        }
         return false; //Try building collision around all the lights?
     }
-
 
 }

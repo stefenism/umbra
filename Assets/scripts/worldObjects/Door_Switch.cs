@@ -8,7 +8,6 @@ public class Door_Switch : InteractableObject
     public Door door;
 
     public override void Interact(Combatant cmb) {
-        if (!currentState)
-            currentState = door.OpenDoor();
+            currentState = door.ToggleDoor();
     }
 }
