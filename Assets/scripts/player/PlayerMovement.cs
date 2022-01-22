@@ -7,6 +7,21 @@ public class PlayerMovement : MonoBehaviour {
     private float verticalMovement;
     public PlayerStateManager playerState;
 
+    [Header("shadow flight")]
+    public float flightSpeed = 1.5f;
+    public float flightAccel = .1f;
+    public float flightDecel = .075f;
+    public float maxFlightSpeed = 3;
+
+    [Header("glide (light mode) ")]
+    public float verticalGlideSpeed = .5f;
+    public float horizontalGlideSpeed = 2;
+    public float glideAccel = .075f;
+    public float glideDecel = 0.075f;
+    public float maxVerticalGlideSpeed = 1;
+    public float maxHorizontalGlideSpeed = 2;
+    public float glideGravityModifier = .25f;
+
     [Header("horizontal movement")]
     public float runSpeed = 2;
 
@@ -31,13 +46,15 @@ public class PlayerMovement : MonoBehaviour {
     private void Update() {
         checkInput();
 
+        checkLightGrounded();
+
         if(Input.GetKeyDown("b")){
             playerState.toggleMode();
         }
     }
 
     private void FixedUpdate() {
-        if(playerState.IsPlayerInLight()){
+        if(playerState.IsPlayerOnGround()){
             run();
 
             if(jumping){
@@ -51,6 +68,10 @@ public class PlayerMovement : MonoBehaviour {
             if(grounded){
                 jumpDuration = 0;
             }
+        }
+
+        if(playerState.IsPlayerInLight()){
+            glide();
         }
 
         if(playerState.IsPlayerInDark()){
@@ -72,6 +93,12 @@ public class PlayerMovement : MonoBehaviour {
         JumpButton();
     }
 
+    private void checkLightGrounded() {
+        if(playerState.IsPlayerInLight() && grounded){
+            playerState.SetPlayerOnGround();
+        }
+    }
+
     private void run() {
         Vector2 newVelocity = rb.velocity;
         newVelocity.x = horizontalMovement * runSpeed;
@@ -80,8 +107,69 @@ public class PlayerMovement : MonoBehaviour {
 
     private void fly() {
         Vector2 newVelocity = rb.velocity;
-        newVelocity.x = horizontalMovement * runSpeed;
-        newVelocity.y = verticalMovement * runSpeed;
+
+        // if you're moving
+        if( horizontalMovement != 0 ){
+
+            if(Mathf.Abs(rb.velocity.x) <= maxFlightSpeed){
+                newVelocity.x += (horizontalMovement * (flightSpeed * flightAccel));
+            } else {
+                newVelocity.x -= rb.velocity.x * flightDecel;
+            }
+        }
+
+        if( verticalMovement != 0){
+
+            if(Mathf.Abs(rb.velocity.y) <= maxFlightSpeed){
+                newVelocity.y += (verticalMovement * (flightSpeed * flightAccel));
+            } else {
+                newVelocity.y -= rb.velocity.y * flightDecel;
+            }
+        }
+
+        // input has stopped decelerate
+        if( horizontalMovement == 0 ) {
+            if(Mathf.Abs(newVelocity.x) > 0){
+                newVelocity.x -= rb.velocity.x * flightDecel;
+            }
+        }
+
+        if( verticalMovement == 0 ) {
+            if(Mathf.Abs(newVelocity.y) > 0){
+                newVelocity.y -= rb.velocity.y * flightDecel;
+            }
+        }
+
+        rb.velocity = newVelocity;
+    }
+
+    // this could be fly with different values passed in but...game jam
+    private void glide() {
+        Vector2 newVelocity = rb.velocity;
+
+        if(horizontalMovement != 0) {
+
+            if(Mathf.Abs(rb.velocity.x) <= maxHorizontalGlideSpeed){
+                newVelocity.x += (horizontalMovement * (horizontalGlideSpeed * glideAccel));
+            } else {
+                newVelocity.x -= rb.velocity.x * glideDecel;
+            }
+        }
+
+        if( verticalMovement != 0) {
+            if(rb.velocity.y <= 0 && Mathf.Abs(rb.velocity.y) < maxVerticalGlideSpeed){
+                newVelocity.y += (verticalMovement * (verticalGlideSpeed * glideAccel));
+            } else {
+                newVelocity.y -= rb.velocity.y * glideDecel;
+            }
+        }
+
+        if(horizontalMovement == 0 ) {
+            if(Mathf.Abs(newVelocity.x) > 0){
+                newVelocity.x -= rb.velocity.x * glideDecel;
+            }
+        }
+
         rb.velocity = newVelocity;
     }
 
@@ -91,6 +179,10 @@ public class PlayerMovement : MonoBehaviour {
 
     public void setLightMode(){
         rb.gravityScale = 1;
+    }
+
+    public void setGroundMode(){
+
     }
 
     public void setGravityScale(float newScale){rb.gravityScale = newScale;}
@@ -124,8 +216,12 @@ public class PlayerMovement : MonoBehaviour {
             jumping = false;
             jumpAllowed = false;
 
-            if(rb.velocity.y < 0 ){
+            if(rb.velocity.y < 0 && !playerState.IsPlayerInDark() && !playerState.IsPlayerInLight()){
                 setGravityScale(gravityDropModifier);
+            }
+
+            if(rb.velocity.y < 0 && playerState.IsPlayerInLight()){
+                setGravityScale(glideGravityModifier);
             }
         }
     }
