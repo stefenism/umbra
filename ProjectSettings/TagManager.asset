@@ -42,3 +42,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: DefaultLight
+    uniqueID: 51527749
+    locked: 0

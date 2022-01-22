@@ -6,7 +6,7 @@ public class Player : Combatant {
 
     private List<InteractableObject> nearObjects;
 
-    // Start is called before the first frame update
+    // Start is called before the first frame updateasdf
     void Start() {
 
     }
