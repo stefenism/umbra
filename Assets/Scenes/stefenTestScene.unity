@@ -685,12 +685,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1946443683}
-  - component: {fileID: 1946443682}
   - component: {fileID: 1946443681}
   - component: {fileID: 1946443680}
   - component: {fileID: 1946443679}
-  - component: {fileID: 1946443684}
   - component: {fileID: 1946443685}
+  - component: {fileID: 1946443684}
+  - component: {fileID: 1946443682}
   m_Layer: 0
   m_Name: umbra
   m_TagString: Untagged
@@ -805,18 +805,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1946443678}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf886086347e4c476afa153438dba4db, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ba3df7fb1cd61d4b96cfd6fbdb8c501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  playerState: {fileID: 0}
-  runSpeed: 2
-  grounded: 0
-  jumpForce: 2
-  jumpTime: 0.3
-  airDrag: 1
-  gravityDropModifier: 2
-  airSpeed: 2
 --- !u!4 &1946443683
 Transform:
   m_ObjectHideFlags: 0
@@ -840,9 +831,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 1946443678}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d22cda5d5dbadf648c5f41ce47e197c, type: 3}
+  m_Script: {fileID: 11500000, guid: 05fc0df4ebef85a46a83d9d8f8cba92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  playerState: {fileID: 0}
+  flightSpeed: 1.5
+  flightAccel: 0.1
+  flightDecel: 0.075
+  maxFlightSpeed: 3
+  verticalGlideSpeed: 0.5
+  horizontalGlideSpeed: 2
+  glideAccel: 0.075
+  glideDecel: 0.075
+  maxVerticalGlideSpeed: 1
+  maxHorizontalGlideSpeed: 2
+  glideGravityModifier: 0.25
+  runSpeed: 2
+  grounded: 0
+  jumpForce: 3
+  jumpTime: 0.3
+  airDrag: 1
+  gravityDropModifier: 2
+  airSpeed: 2
 --- !u!114 &1946443685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -852,7 +863,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1946443678}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79f3b4681b19248f997d58a76ebb3ca0, type: 3}
+  m_Script: {fileID: 11500000, guid: d9020bedc43b28d45bcb555bcd48d407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   groundDistance: 0.37

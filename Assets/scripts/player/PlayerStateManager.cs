@@ -5,6 +5,7 @@ public class PlayerStateManager : MonoBehaviour {
     private enum PlayerState {
         LIGHT,
         SHADOW,
+        GROUND,
         DEAD
     }
 
@@ -21,9 +22,11 @@ public class PlayerStateManager : MonoBehaviour {
 
     public void toggleMode(){
         if(IsPlayerInLight()){
-            SetPlayerInDark();
+            SetPlayerOnGround();
         } else if(IsPlayerInDark()){
             SetPlayerInLight();
+        } else if(IsPlayerOnGround()){
+            SetPlayerInDark();
         }
     }
 
@@ -37,7 +40,13 @@ public class PlayerStateManager : MonoBehaviour {
         mover.setLightMode();
     }
 
+    public void SetPlayerOnGround(){
+        playerState = PlayerState.GROUND;
+        mover.setGroundMode();
+    }
+
     public bool IsPlayerInLight(){return playerState == PlayerState.LIGHT;}
     public bool IsPlayerInDark(){return playerState == PlayerState.SHADOW;}
+    public bool IsPlayerOnGround(){return playerState == PlayerState.GROUND;}
     public bool IsPlayerDead(){return playerState == PlayerState.DEAD;}
 }
