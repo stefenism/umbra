@@ -596,6 +596,8 @@ MonoBehaviour:
   LastWalkDistance: 0
   MaxIdleTime: 1
   MinIdleTime: 0.5
+  ShootAudio: {fileID: 0}
+  GunCockAudio: {fileID: 0}
 --- !u!4 &419579241
 Transform:
   m_ObjectHideFlags: 0
@@ -928,9 +930,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  lightObject: {fileID: 1834149092}
+  lightObjects: []
   onSprite: {fileID: 0}
   offSprite: {fileID: 0}
+  SwitchSound: {fileID: 0}
+  VolumeScale: 1
 --- !u!61 &760087254
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1663,6 +1667,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightOn: 1
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &1834149093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1842,6 +1849,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2028345234965662740, guid: 6386e4f48d733ee4c8b7430b35c81873, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2523934152348489123, guid: 6386e4f48d733ee4c8b7430b35c81873, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1902,6 +1913,10 @@ PrefabInstance:
     - target: {fileID: 8777156365641305460, guid: 83f3b939b23879f3abefab2a89149bca, type: 3}
       propertyPath: speed
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777156365641305460, guid: 83f3b939b23879f3abefab2a89149bca, type: 3}
+      propertyPath: playerLayer.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 8777156365641305462, guid: 83f3b939b23879f3abefab2a89149bca, type: 3}
       propertyPath: m_RootOrder

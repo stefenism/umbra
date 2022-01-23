@@ -24,8 +24,11 @@ public class GameManager : MonoBehaviour {
     }
 
     static public void ReloadCurrentScene() {
-        Resources.UnloadUnusedAssets();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+    }
+
+    static public void LoadNextScene() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     
 }
