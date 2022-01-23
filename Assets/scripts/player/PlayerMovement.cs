@@ -189,6 +189,7 @@ public class PlayerMovement : MonoBehaviour {
 
     // this could be fly with different values passed in but...game jam
     private void glide() {
+        Debug.Log("blah");
         Vector2 newVelocity = rb.velocity;
 
         if (horizontalMovement != 0) {
