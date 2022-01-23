@@ -39,6 +39,7 @@ public class Player : Combatant {
                 stateManager.SetPlayerInLight();
             } 
         } else {
+            Debug.Log("isn't in light");
             if (!stateManager.IsPlayerInDark()) {
                 Debug.Log("Switched to dark");
                 waiting = true;

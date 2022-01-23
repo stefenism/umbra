@@ -18,6 +18,7 @@ public class Combatant : MonoBehaviour {
     private Vector2 ray;
     
     public Transform player;
+    public PlayerMovement playerScript;
     public LayerMask playerLayer;
 
     public void Start() {
