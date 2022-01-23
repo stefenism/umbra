@@ -32,6 +32,9 @@ public class Player : Combatant {
 
     // Update is called once per frame
     void Update() {
+        if(stateManager.IsPlayerDead()){
+            return;
+        }
         if (waiting) {
             if (timeWaited >= timeToChange) {
                 timeWaited = 0f;
@@ -115,7 +118,7 @@ public class Player : Combatant {
             //Play big boy grapple
             grappledEnemy = enemy;
             enemy.gameObject.transform.parent = mover.tallBoy.transform;
-            enemy.transform.position = grappleTrigger.gameObject.position;
+            enemy.transform.position = grappleTrigger.gameObject.transform.position;
         }else if (stateManager.IsPlayerInDark() && grappledEnemy == null) {
             //Just kill the baddy
             // enemyInRange.Kill();
