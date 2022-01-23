@@ -381,7 +381,9 @@ public class PlayerMovement : MonoBehaviour {
             PlaySound(SwitchToBallSound, .5f);
             rb.velocity = Vector3.zero;
             killControls = true;
-            explodeEnemy(playerBrain.getGrappledEnemy());
+            if(playerBrain.getGrappledEnemy() != null){
+                explodeEnemy(playerBrain.getGrappledEnemy());
+            }
         }
     }
 

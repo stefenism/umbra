@@ -110,6 +110,7 @@ public class Player : Combatant {
             //Play big boy grapple
             grappledEnemy = enemy;
             enemy.gameObject.transform.parent = mover.tallBoy.transform;
+            enemy.transform.position = grappleTrigger.gameObject.position;
         }else if (stateManager.IsPlayerInDark() && grappledEnemy == null) {
             //Just kill the baddy
             // enemyInRange.Kill();
