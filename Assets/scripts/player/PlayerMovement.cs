@@ -161,7 +161,7 @@ public class PlayerMovement : MonoBehaviour {
         Vector2 newVelocity = rb.velocity;
         newVelocity.x = horizontalMovement * runSpeed;
         rb.velocity = newVelocity;
-        if (newVelocity.x > 0 || 0 > newVelocity.x ) {
+        if (newVelocity.x > 0 || 0 > newVelocity.x) {
             tallAnimator.SetBool("Walking", true);
             if (playerState.HasEnemeyGrappled) {
                 tallAnimator.SetBool("WalkingBackward", true);
@@ -327,12 +327,12 @@ public class PlayerMovement : MonoBehaviour {
 
     void Flip() {
         facingRight = !facingRight;
+        //tallAnimator.SetBool("Turn", true);
         Transform currentObject = GetUsedStateObject().transform;
         Vector3 theScale = currentObject.transform.localScale;
         theScale.x *= -1;
         currentObject.transform.localScale = theScale;
-       // tallAnimator.SetBool("Turn", true);
-	}
+    }
 
     public void FinishFlip() { //Don't delete
     }
@@ -350,7 +350,7 @@ public class PlayerMovement : MonoBehaviour {
             Vector3 theScale = tallBoy.transform.localScale;
             theScale.x = facingRight ? 1 : -1;
             tallBoy.transform.localScale = theScale;
-            
+
             StopPlayerInput();
             tallAnimator.Rebind();
             tallAnimator.Update(0f);
