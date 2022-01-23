@@ -41,7 +41,7 @@ public class Door : InteractableObject
 
     public bool ToggleDoor() {
         currentState = !currentState;
-        doorObj.gameObject.GetComponent<BoxCollider2D>().enabled = !currentState;
+        doorObj.gameObject.SetActive(!currentState);
         UpdateAnimation(currentState);
         PlayAudio();
         return currentState;
