@@ -20,6 +20,8 @@ public class Door : InteractableObject
             OpenDoor();
         else
             CloseDoor();
+
+
     }
 
     public override void Interact(Combatant cmb) {
@@ -29,13 +31,13 @@ public class Door : InteractableObject
 
     public void OpenDoor() {
         currentState = true;
-        doorObj.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        doorObj.gameObject.SetActive(false);
         UpdateAnimation(true);
     }
 
     public void CloseDoor() {
         currentState = false;
-        doorObj.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        doorObj.gameObject.SetActive(true);
         UpdateAnimation(false);
     }
 
