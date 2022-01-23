@@ -86,11 +86,11 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        Debug.Log("kill controls is:" + killControls);
+        //Debug.Log("kill controls is:" + killControls);
         if (killControls) {
             return;
         }
-        Debug.Log("inside fixed update");
+        //Debug.Log("inside fixed update");
         if (playerState.IsPlayerOnGround() || playerState.IsPlayerGrappling()) {
             Debug.Log("inside fixed update run");
             run();
@@ -367,7 +367,6 @@ public class PlayerMovement : MonoBehaviour {
             tallAnimator.SetBool("Fly", true);
             rb.velocity = Vector3.zero;
             killControls = true;
-            Instantiate(deadGuy, tallBoy.transform.position, tallBoy.transform.rotation);
         }
     }
 

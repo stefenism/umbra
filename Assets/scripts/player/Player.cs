@@ -71,6 +71,9 @@ public class Player : Combatant {
         if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy)) {
             enemyInRange = enemy;
         }
+        if (collision.gameObject.TryGetComponent<LevelTransfer>(out LevelTransfer levelTransfer)) {
+            levelTransfer.GotoNextLevel();
+        }
     }
 
     public void PassedPlayerCollisionExit(Collider2D collision) {
