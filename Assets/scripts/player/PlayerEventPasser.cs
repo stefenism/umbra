@@ -32,10 +32,6 @@ public class PlayerEventPasser : MonoBehaviour
 
     public void killPlayer() {
         Destroy(player.gameObject);
-        Invoke("reloadCurrentScene", 2.0f);
-    }
-
-    public void reloadCurrentScene() {
         GameManager.ReloadCurrentScene();
     }
 }
