@@ -304,8 +304,7 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-    void Flip(){
-
+    void Flip() {
 		facingRight = !facingRight;
 
         Transform currentObject = GetUsedStateObject().transform;
@@ -336,14 +335,6 @@ public class PlayerMovement : MonoBehaviour {
 
     public void SwitchToBall() {
         if (!ballBoy.activeSelf) {
-            rb = ballBoy.GetComponent<Rigidbody2D>();
-            rb.gravityScale = 0f;
-            tallBoy.SetActive(false);
-            ballBoy.transform.position = headSetPosition.transform.position;
-            ballBoy.SetActive(true);
-            playerState.usingState = PlayerStateManager.UsingState.BALL;
-            boxCollider = ballBoy.GetComponent<BoxCollider2D>();
-
             Vector3 theScale = ballBoy.transform.localScale;
             theScale.x = facingRight ? 1 : -1;
             ballBoy.transform.localScale = theScale;
