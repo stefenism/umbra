@@ -146,7 +146,7 @@ public class PlayerMovement : MonoBehaviour {
             DetermineJumpButton();
         }
 
-        Debug.Log("is player grappling: " + playerState.IsPlayerGrappling());
+       // Debug.Log("is player grappling: " + playerState.IsPlayerGrappling());
 
         if(!playerState.IsPlayerGrappling()){
             if(rb.velocity.x > 0.1f && !facingRight) {
