@@ -50,6 +50,9 @@ public class PlayerMovement : MonoBehaviour {
     public float airSpeed = 2f;
 
     public List<Vector3> hitPositions = new List<Vector3>();
+    public Animator ballAnimator;
+    public Animator tallAnimator;
+    private bool killControls;
 
     private void Awake() {
         rb = ballBoy.GetComponent<Rigidbody2D>();
@@ -77,6 +80,9 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+        if (killControls) {
+            return;
+        }
         if (playerState.IsPlayerOnGround()) {
             run();
 
@@ -299,19 +305,29 @@ public class PlayerMovement : MonoBehaviour {
             tallBoy.SetActive(true);
             playerState.usingState = PlayerStateManager.UsingState.TALLBOY;
             boxCollider = tallBoy.GetComponent<BoxCollider2D>();
+            StopPlayerInput();
+            tallAnimator.Rebind();
+            tallAnimator.Update(0f);
         }
     }
 
     public void SwitchToBall() {
         if (!ballBoy.activeSelf) {
-            rb = ballBoy.GetComponent<Rigidbody2D>();
-            rb.gravityScale = 0f;
-            tallBoy.SetActive(false);
-            ballBoy.transform.position = headSetPosition.transform.position;
-            ballBoy.SetActive(true);
-            playerState.usingState = PlayerStateManager.UsingState.BALL;
-            boxCollider = ballBoy.GetComponent<BoxCollider2D>();
+            tallAnimator.SetBool("Fly", true);
+            rb.velocity = Vector3.zero;
+            killControls = true;
         }
+    }
+
+    public void FinishSwitchToBall() {
+        killControls = false;
+        rb = ballBoy.GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0f;
+        tallBoy.SetActive(false);
+        ballBoy.transform.position = headSetPosition.transform.position;
+        ballBoy.SetActive(true);
+        playerState.usingState = PlayerStateManager.UsingState.BALL;
+        boxCollider = ballBoy.GetComponent<BoxCollider2D>();
     }
 
     public GameObject GetUsedStateObject() {
@@ -320,5 +336,13 @@ public class PlayerMovement : MonoBehaviour {
         } else {
             return tallBoy;
         }
+    }
+
+    public void StopPlayerInput() {
+        killControls = true;
+    }
+
+    public void ContinuePlayerInput() {
+        killControls = false;
     }
 }

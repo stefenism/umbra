@@ -59,12 +59,6 @@ public class Player : Combatant {
         if (Input.GetMouseButtonDown(0)) {
             GrappleEnemy();
         }
-        if (Input.GetKeyDown("q")) {
-            if (stateManager.usingState == PlayerStateManager.UsingState.BALL)
-                mover.SwitchToTallBoy();
-            else
-                mover.SwitchToBall();
-        }
     }
 
     public void PassedPlayerCollisionEnter(UnityEngine.Collider2D collision) {
@@ -96,12 +90,14 @@ public class Player : Combatant {
     }
 
     public void GrappleEnemy() {
+        if (stateManager.IsPlayerOnGround() && grappledEnemy == null) {
+            mover.tallAnimator.SetBool("Attack", true);
+        }
         if (enemyInRange == null) {
-            //Play miss/grabble animation?
             return;
         }
 
-        if (stateManager.IsPlayerInLight() && grappledEnemy == null) {
+        if (stateManager.IsPlayerOnGround() && grappledEnemy == null) {
             //Play big boy grapple
             stateManager.HasEnemeyGrappled = true;
             grappledEnemy = enemyInRange;
@@ -120,4 +116,8 @@ public class Player : Combatant {
         return false;
     }
 
+
+    public PlayerMovement GetPlayerMovement() {
+        return mover;
+    }
 }
