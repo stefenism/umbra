@@ -38,14 +38,12 @@ public class PlayerStateManager : MonoBehaviour {
         }
     }
 
-    public void SetPlayerInDark() {
-        Debug.Log("Player set to dark mode");
+    public void SetPlayerInDark(){
         playerState = PlayerState.SHADOW;
         mover.setDarknessMode();
     }
 
     public void SetPlayerInLight() {
-        Debug.Log("Player set to light mode.");
         playerState = PlayerState.LIGHT;
         mover.setLightMode();
     }
