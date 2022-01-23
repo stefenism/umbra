@@ -14,7 +14,6 @@ public class GroundDetect : MonoBehaviour {
 	private Vector2 ray3;
 
 	public BoxCollider2D boxCollider;
-	public CircleCollider2D circleCollider;
 	public Transform opTransform;
 
 	// Use this for initialization
@@ -25,15 +24,18 @@ public class GroundDetect : MonoBehaviour {
 		height = boxCollider.bounds.extents.y + 0.02f;
 	}
 
-	public void Initalize(BoxCollider2D box) {
+	public void Initalize(BoxCollider2D box, Transform opForm) {
 		player = GetComponent<PlayerMovement>();
 
 		width = boxCollider.bounds.extents.x - 0.01f;
 		height = boxCollider.bounds.extents.y + 0.02f;
+
+		opTransform = opForm;
 	}
 
-	public void Initalize(CircleCollider2D circle) {
+	public void Initalize(CircleCollider2D circle, Transform opForm) {
 		width = circle.bounds.extents.x - 0.01f;
+		opTransform = opForm;
 
     }
 

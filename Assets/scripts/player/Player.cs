@@ -21,11 +21,13 @@ public class Player : Combatant {
     // Update is called once per frame
     void Update() {
         if (IsInLight()) {
-            if (!stateManager.IsPlayerInLight()){
+            if (!stateManager.IsPlayerInLight() && !stateManager.IsPlayerOnGround()) {
+                Debug.Log("Switched to light");
                 stateManager.SetPlayerInLight();
-            }
+            } 
         } else {
             if (!stateManager.IsPlayerInDark()) {
+                Debug.Log("Switched to dark");
                 stateManager.SetPlayerInDark();
                 if (stateManager.HasEnemeyGrappled) {
                     grappledEnemy.Kill();
@@ -49,7 +51,6 @@ public class Player : Combatant {
             else
                 mover.SwitchToBall();
         }
-        //Check for interact key press
     }
 
     public void PassedPlayerCollisionEnter(UnityEngine.Collider2D collision) {

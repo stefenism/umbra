@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour {
 
         playerState = GetComponent<PlayerStateManager>();
         anim = GetComponent<Animator>();
-        boxCollider = GetComponent<BoxCollider2D>();
+        boxCollider = ballBoy.GetComponent<BoxCollider2D>();
     }
 
     private void Update() {
@@ -221,16 +221,21 @@ public class PlayerMovement : MonoBehaviour {
 
     public void setGravityScale(float newScale) { rb.gravityScale = newScale; }
     
-    public List<Vector3> getPlayerHitPositions(){
-		getHitPositions();
-		return hitPositions;
+    public List<Vector3> getPlayerHitPositions() {
+        if (playerState.usingState == PlayerStateManager.UsingState.BALL) {
+            getHitPositions(ballBoy.transform.position);
+            return hitPositions;
+        } else {
+            getHitPositions(tallBoy.transform.position);
+            return hitPositions;
+        }
 	}
 
-    public void getHitPositions(){
+    public void getHitPositions(Vector3 position) {
 		hitPositions.Clear();
-		hitPositions.Add(new Vector3(transform.position.x + boxCollider.bounds.extents.x, transform.position.y, transform.position.z));
-		hitPositions.Add(new Vector3(transform.position.x - boxCollider.bounds.extents.x, transform.position.y, transform.position.z));
-		hitPositions.Add(transform.position);
+		hitPositions.Add(new Vector3(position.x + boxCollider.bounds.extents.x, position.y, position.z));
+		hitPositions.Add(new Vector3(position.x - boxCollider.bounds.extents.x, position.y, position.z));
+		hitPositions.Add(position);
 	}
 
     void DetermineJumpButton() {
@@ -288,9 +293,10 @@ public class PlayerMovement : MonoBehaviour {
     public void SwitchToTallBoy() {
         rb = tallBoy.GetComponent<Rigidbody2D>();
         ballBoy.SetActive(false);
-        tallBoy.transform.position = ballBoy.transform.position;
+        tallBoy.transform.position = new Vector3(ballBoy.transform.position.x, ballBoy.transform.position.y + .25f);
         tallBoy.SetActive(true);
         playerState.usingState = PlayerStateManager.UsingState.TALLBOY;
+        boxCollider = tallBoy.GetComponent<BoxCollider2D>();
     }
 
     public void SwitchToBall() {
@@ -298,8 +304,8 @@ public class PlayerMovement : MonoBehaviour {
         tallBoy.SetActive(false);
         ballBoy.transform.position = headSetPosition.transform.position;
         ballBoy.SetActive(true);
-
         playerState.usingState = PlayerStateManager.UsingState.BALL;
+        boxCollider = ballBoy.GetComponent<BoxCollider2D>();
     }
 
     public GameObject GetUsedStateObject() {
