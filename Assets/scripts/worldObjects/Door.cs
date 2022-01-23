@@ -9,7 +9,12 @@ public class Door : InteractableObject
     public GameObject doorObj;
     private Animator animator;
 
+    public AudioClip DoorOpenSound;
+    private AudioSource audioSource;
+    public float VolumeScale = 1f;
+
     private void Awake() {
+        audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         if (currentState)
             OpenDoor();
@@ -38,6 +43,7 @@ public class Door : InteractableObject
         currentState = !currentState;
         doorObj.gameObject.GetComponent<BoxCollider2D>().enabled = !currentState;
         UpdateAnimation(currentState);
+        PlayAudio();
         return currentState;
     }
 
@@ -47,5 +53,9 @@ public class Door : InteractableObject
 
     private void UpdateAnimation(bool b) {
         animator.SetBool("Open", b);
+    }
+
+    private void PlayAudio() {
+        audioSource.PlayOneShot(DoorOpenSound, VolumeScale);
     }
 }
