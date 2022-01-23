@@ -8,14 +8,19 @@ public class LightObject : MonoBehaviour {
 
     private Light2D lightObj;
     public bool lightOn = true;
-    private LayerMask ignoreMask;
+    public LayerMask ignoreMask;
 
     void Awake() {
         lightObj = GetComponent<Light2D>();
         if (!lightOn) {
             lightObj.enabled = false;
         }
-        ignoreMask = LayerMask.GetMask("Enemy");
+        int enLayer = LayerMask.GetMask("Enemy");
+        int lightLayer = LayerMask.GetMask("Glass");
+        var layermask1 = 1 << enLayer;
+        var layermask2 = 1 << lightLayer;
+        ignoreMask = layermask1 | layermask2;
+
     }
 
     public double GetInnerRaidus() {

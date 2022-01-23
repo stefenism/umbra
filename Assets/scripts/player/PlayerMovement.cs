@@ -59,7 +59,17 @@ public class PlayerMovement : MonoBehaviour {
     public GameObject deadGuy;
     public GameObject grabMan;
 
+    public AudioSource audioSource;
+
+    public AudioClip GrabEnemySound;
+    public AudioClip DeathSound; //Not implemented
+    public AudioClip SwitchToTallSound;
+    public AudioClip SwitchToBallSound;
+    public AudioClip MoveSound; //Not implemented
+
+
     private void Awake() {
+        audioSource = GetComponent<AudioSource>();
         rb = ballBoy.GetComponent<Rigidbody2D>();
         if (StartAsBall) {
             tallBoy.SetActive(false);
@@ -360,6 +370,7 @@ public class PlayerMovement : MonoBehaviour {
             StopPlayerInput();
             tallAnimator.Rebind();
             tallAnimator.Update(0f);
+            PlaySound(SwitchToTallSound, .5f);
         }
     }
 
@@ -372,6 +383,7 @@ public class PlayerMovement : MonoBehaviour {
             tallAnimator.SetBool("WalkingBackward", false);
             ballBoy.transform.position = headSetPosition.transform.position;
             tallAnimator.SetBool("Fly", true);
+            PlaySound(SwitchToBallSound, .5f);
             rb.velocity = Vector3.zero;
             killControls = true;
             if(playerBrain.getGrappledEnemy() != null){
@@ -422,5 +434,9 @@ public class PlayerMovement : MonoBehaviour {
 
     public void ContinuePlayerInput() {
         killControls = false;
+    }
+
+    public void PlaySound(AudioClip clip, float VolumeScale) {
+        audioSource.PlayOneShot(clip, VolumeScale);
     }
 }
