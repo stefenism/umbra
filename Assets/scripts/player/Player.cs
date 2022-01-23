@@ -10,6 +10,7 @@ public class Player : Combatant {
     private PlayerStateManager stateManager;
     private PlayerMovement mover;
     private Enemy grappledEnemy;
+    public BoxCollider2D grappleTrigger;
 
     private float timeToChange = .4f;
     private float timeWaited = 0f;
@@ -34,7 +35,7 @@ public class Player : Combatant {
             }
         }
         if (IsInLight()) {
-            if (!stateManager.IsPlayerInLight() && !stateManager.IsPlayerOnGround()) {
+            if (!stateManager.IsPlayerInLight() && !stateManager.IsPlayerOnGround() && !stateManager.IsPlayerGrappling()) {
                 stateManager.SetPlayerInLight();
             } 
         } else {
@@ -54,9 +55,9 @@ public class Player : Combatant {
         if (Input.GetKeyDown("e")) {
             Interact();
         }
-        if (Input.GetMouseButtonDown(0)) {
-            GrappleEnemy();
-        }
+        // if (Input.GetMouseButtonDown(0)) {
+        //     GrappleEnemy();
+        // }
     }
 
     public void PassedPlayerCollisionEnter(UnityEngine.Collider2D collision) {
@@ -69,7 +70,6 @@ public class Player : Combatant {
         }
         if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy)) {
             enemyInRange = enemy;
-            Debug.Log("Hit Enemey");
         }
     }
 
@@ -83,24 +83,28 @@ public class Player : Combatant {
         }
     }
 
+    public void doGrapple(Enemy enemy){
+        GrappleEnemy(enemy);
+        stateManager.SetPlayerGrappling();
+    }
+
     private void Interact() {
         if (nearObjects.Count > 0)
             nearObjects[0].Interact(this);
     }
 
-    public void GrappleEnemy() {
+    public void GrappleEnemy(Enemy enemy) {
         if (stateManager.IsPlayerOnGround() && grappledEnemy == null) {
             mover.tallAnimator.SetBool("Attack", true);
         }
-        if (enemyInRange == null) {
-            return;
-        }
+        // if (enemyInRange == null) {
+        //     return;
+        // }
 
         if (stateManager.IsPlayerOnGround() && grappledEnemy == null) {
             //Play big boy grapple
-            stateManager.HasEnemeyGrappled = true;
-            grappledEnemy = enemyInRange;
-            grappledEnemy.transform.parent = transform;
+            grappledEnemy = enemy;
+            enemy.gameObject.transform.parent = mover.tallBoy.transform;
         }else if (stateManager.IsPlayerInDark() && grappledEnemy == null) {
             //Just kill the baddy
             enemyInRange.Kill();
@@ -113,6 +117,10 @@ public class Player : Combatant {
                 return true;
         }
         return false;
+    }
+
+    public Enemy getGrappledEnemy() {
+        return grappledEnemy;
     }
 
 

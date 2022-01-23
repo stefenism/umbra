@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager gameDaddy = null;
 
     public PlayerMovement player;
+    public Player playerBrain;
 
     Transform currentPlayerSpawn;
 

@@ -6,6 +6,7 @@ public class PlayerStateManager : MonoBehaviour {
         LIGHT,
         SHADOW,
         GROUND,
+        GRAPPLING,
         DEAD
     }
 
@@ -16,6 +17,7 @@ public class PlayerStateManager : MonoBehaviour {
 
     public bool HasEnemeyGrappled;
 
+    [SerializeField]
     private PlayerState playerState = PlayerState.LIGHT;
     public UsingState usingState = UsingState.BALL;
     private PlayerMovement mover;
@@ -60,9 +62,14 @@ public class PlayerStateManager : MonoBehaviour {
         mover.setGroundMode();
     }
 
+    public void SetPlayerGrappling() {
+        playerState = PlayerState.GRAPPLING;
+    }
+
     public bool IsPlayerInLight() { return playerState == PlayerState.LIGHT; }
     public bool IsPlayerInDark() { return playerState == PlayerState.SHADOW; }
     public bool IsPlayerOnGround() { return playerState == PlayerState.GROUND; }
+    public bool IsPlayerGrappling() { return playerState == PlayerState.GRAPPLING; }
     public bool IsPlayerDead() { return playerState == PlayerState.DEAD; }
 
 }
