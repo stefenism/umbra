@@ -327,6 +327,10 @@ public class PlayerMovement : MonoBehaviour {
                 setGravityScale(glideGravityModifier);
             }
         }
+
+        if(!grounded) {
+            jumpAllowed = false;
+        }
     }
 
     void Jump() {
