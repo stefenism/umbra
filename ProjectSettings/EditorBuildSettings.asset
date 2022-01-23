@@ -5,7 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/DaltonTest.unity
+    guid: 44bfc5c3b2ab46f4db79916adfa45ed8
+  - enabled: 1
+    path: Assets/Scenes/stefenTestScene.unity
+    guid: b86bea557198c994a9c8cc987705ca9c
   m_configObjects: {}
