@@ -1,0 +1,32 @@
+[Umbra] uses these sounds from freesound:
+{"FILE"} by {USER} ( http://freesound.org/s/{soundID}/ ) licensed under CCBYNC 3.0
+{"FILE1"},{"FILE2"} by {USER} ( http://freesound.org/people/{USER}/ ) licensed under CCBY 3.0
+etc..
+
+SFX:
+	swipe		
+	Shadow dies
+	Enemy dies		
+	transform (to Tall)
+	transform (to Small)
+	shoot		
+	cock gun
+	door		
+	hit		
+	switch (light)	
+	switch (door)	
+	Shadow laugh/voice lines?	
+	
+Sound				User			License\		Use?			URL
+synth comb swipe		THE_bizniss		by			Transform?		https://freesound.org/people/THE_bizniss/sounds/37788/
+Throw/Swipe			mrickey13		0			Swipe (miss)		https://freesound.org/people/mrickey13/sounds/515625/
+WeaponSwipe			Yap_Audio_Production	by			Swipe (hit)		https://freesound.org/people/Yap_Audio_Production/sounds/219002/
+Laser				Daleonfire		0			Shoot[1]		https://freesound.org/people/Daleonfire/sounds/376694/
+Laser Gun			Dpoggioli		by			Shoot[2]		https://freesound.org/people/Dpoggioli/sounds/196914/
+Laser shoot			MusicLegends		by			Shoot[3]		https://freesound.org/people/MusicLegends/sounds/344310/
+Pressurized Door Opening	NeoSpica		0			Door (open/close)	https://freesound.org/people/NeoSpica/sounds/425090/
+switch big breaker..		kyles			0			Lever[1]		https://freesound.org/people/kyles/sounds/451933/
+FX_NOISY_METAL_DOOR_OPEN	Olichite		0			Lever[2]		https://freesound.org/people/Olichite/sounds/238891/
+Gun Cock			SmartWentCody		by			Cock[1]			https://freesound.org/people/SmartWentCody/sounds/179011/
+Lower Gun Cock			woodmoose		by			Cock[2]			https://freesound.org/people/woodmoose/sounds/177054/
+Gun Cocking Sound		Cloud-10		0			Cock[3]			https://freesound.org/people/Cloud-10/sounds/545958/
