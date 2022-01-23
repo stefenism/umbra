@@ -25,7 +25,7 @@ public class GroundDetect : MonoBehaviour {
 	}
 
 	public void Initalize(BoxCollider2D box, Transform opForm) {
-		player = GetComponent<PlayerMovement>();
+		//player = GetComponent<PlayerMovement>();
 
 		width = boxCollider.bounds.extents.x - 0.01f;
 		height = boxCollider.bounds.extents.y + 0.02f;
@@ -33,15 +33,8 @@ public class GroundDetect : MonoBehaviour {
 		opTransform = opForm;
 	}
 
-	public void Initalize(CircleCollider2D circle, Transform opForm) {
-		width = circle.bounds.extents.x - 0.01f;
-		opTransform = opForm;
-
-    }
-
 	// Update is called once per frame
 	void Update () {
-
 		GroundDetection();
 	}
 

@@ -11,6 +11,10 @@ public class Player : Combatant {
     private PlayerMovement mover;
     private Enemy grappledEnemy;
 
+    private float timeToChange = .4f;
+    private float timeWaited = 0f;
+    private bool waiting = false;
+
     private void Awake() {
         lights = FindObjectsOfType<LightObject>();
         stateManager = GetComponent<PlayerStateManager>();
@@ -20,6 +24,15 @@ public class Player : Combatant {
 
     // Update is called once per frame
     void Update() {
+        if (waiting) {
+            if (timeWaited >= timeToChange) {
+                timeWaited = 0f;
+                waiting = false;
+            } else {
+                timeWaited += Time.deltaTime;
+                return;
+            }
+        }
         if (IsInLight()) {
             if (!stateManager.IsPlayerInLight() && !stateManager.IsPlayerOnGround()) {
                 Debug.Log("Switched to light");
@@ -28,6 +41,7 @@ public class Player : Combatant {
         } else {
             if (!stateManager.IsPlayerInDark()) {
                 Debug.Log("Switched to dark");
+                waiting = true;
                 stateManager.SetPlayerInDark();
                 if (stateManager.HasEnemeyGrappled) {
                     grappledEnemy.Kill();

@@ -42,8 +42,9 @@ public class PlayerStateManager : MonoBehaviour {
 
     public void SetPlayerInDark(){
         playerState = PlayerState.SHADOW;
+        groundDetect.Initalize(mover.ballBoy.GetComponent<BoxCollider2D>(), mover.ballBoy.transform);
+        groundDetect.groundDistance = .5f;
         mover.setDarknessMode();
-        groundDetect.Initalize(mover.ballBoy.GetComponent<CircleCollider2D>(), mover.ballBoy.transform);
     }
 
     public void SetPlayerInLight() {
@@ -53,8 +54,9 @@ public class PlayerStateManager : MonoBehaviour {
 
     public void SetPlayerOnGround() {
         playerState = PlayerState.GROUND;
-        mover.setGroundMode();
         groundDetect.Initalize(mover.tallBoy.GetComponent<BoxCollider2D>(), mover.tallBoy.transform);
+        groundDetect.groundDistance = 1.1f;
+        mover.setGroundMode();
     }
 
     public bool IsPlayerInLight() { return playerState == PlayerState.LIGHT; }
