@@ -226,8 +226,6 @@ public class PlayerMovement : MonoBehaviour {
 		hitPositions.Add(transform.position);
 	}
 
-    public void setGravityScale(float newScale){rb.gravityScale = newScale;}
-
     void DetermineJumpButton() {
         if (grounded && !Input.GetButton("Jump")) {
             jumpAllowed = true;
