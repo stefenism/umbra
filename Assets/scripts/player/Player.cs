@@ -35,13 +35,10 @@ public class Player : Combatant {
         }
         if (IsInLight()) {
             if (!stateManager.IsPlayerInLight() && !stateManager.IsPlayerOnGround()) {
-                Debug.Log("Switched to light");
                 stateManager.SetPlayerInLight();
             } 
         } else {
-            Debug.Log("isn't in light");
             if (!stateManager.IsPlayerInDark()) {
-                Debug.Log("Switched to dark");
                 waiting = true;
                 stateManager.SetPlayerInDark();
                 if (stateManager.HasEnemeyGrappled) {
@@ -72,6 +69,7 @@ public class Player : Combatant {
         }
         if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy)) {
             enemyInRange = enemy;
+            Debug.Log("Hit Enemey");
         }
     }
 
