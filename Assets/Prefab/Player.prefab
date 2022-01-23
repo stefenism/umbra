@@ -102,6 +102,7 @@ MonoBehaviour:
   hitPositions: []
   ballAnimator: {fileID: 5396145988120366809}
   tallAnimator: {fileID: 2870035336403464486}
+  deadGuy: {fileID: 7506966478992299015, guid: c686ec0622ad89b4fbd430a74c45de9d, type: 3}
 --- !u!114 &5313815249772321974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,6 +347,10 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 8506825104501361350, guid: 5f61886824806fb45842e6885d19dea6, type: 3}
+      propertyPath: m_Time
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 8506825104501361353, guid: 5f61886824806fb45842e6885d19dea6, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -428,14 +433,14 @@ PrefabInstance:
     - {fileID: 5716901227409345289, guid: 5f61886824806fb45842e6885d19dea6, type: 3}
     - {fileID: 140235320709508880, guid: 5f61886824806fb45842e6885d19dea6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5f61886824806fb45842e6885d19dea6, type: 3}
---- !u!4 &4589210404382349536 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8506825104703850661, guid: 5f61886824806fb45842e6885d19dea6, type: 3}
-  m_PrefabInstance: {fileID: 5313815249365962821}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4589210404382349537 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8506825104703850660, guid: 5f61886824806fb45842e6885d19dea6, type: 3}
+  m_PrefabInstance: {fileID: 5313815249365962821}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4589210404382349536 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8506825104703850661, guid: 5f61886824806fb45842e6885d19dea6, type: 3}
   m_PrefabInstance: {fileID: 5313815249365962821}
   m_PrefabAsset: {fileID: 0}
 --- !u!61 &3025702374416432767
