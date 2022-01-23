@@ -16,6 +16,13 @@ public class Player : Combatant {
     private float timeWaited = 0f;
     private bool waiting = false;
 
+    public AudioClip GrabEnemySound;
+    public AudioClip DeathSound;
+    public AudioClip SwitchToTallSound;
+    public AudioClip SwitchToBallSound;
+    public AudioClip MoveSound;
+
+
     private void Awake() {
         lights = FindObjectsOfType<LightObject>();
         stateManager = GetComponent<PlayerStateManager>();
