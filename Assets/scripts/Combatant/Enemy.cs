@@ -111,6 +111,11 @@ public class Enemy : Combatant
 
     void setAnims() {
         // set anims here
+        if (enemyState == EnemyState.PATROLLING) {
+            anim.SetBool("Walking", true);
+        } else {
+            anim.SetBool("Walking", false);
+        }
     }
 
     void checkFlip() {
@@ -364,6 +369,7 @@ public class Enemy : Combatant
         theScale.x = player.gameObject.transform.localScale.x;
         transform.localScale = theScale;
         setEnemyGrappled();
+        anim.SetBool("Struggle", true);
     }
 
 
