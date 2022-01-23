@@ -295,7 +295,7 @@ public class PlayerMovement : MonoBehaviour {
             rb = tallBoy.GetComponent<Rigidbody2D>();
             rb.gravityScale = 1f;
             ballBoy.SetActive(false);
-            tallBoy.transform.position = ballBoy.transform.position; //new Vector3(ballBoy.transform.position.x, ballBoy.transform.position.y);
+            tallBoy.transform.position = ballBoy.transform.position;
             tallBoy.SetActive(true);
             playerState.usingState = PlayerStateManager.UsingState.TALLBOY;
             boxCollider = tallBoy.GetComponent<BoxCollider2D>();
