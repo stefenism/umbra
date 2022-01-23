@@ -374,6 +374,9 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     public void explodeEnemy(Enemy enemy) {
+        if(enemy == null) {
+            return;
+        }
         // GameObject grabManObject = Instantiate(grabMan, transform.position, transform.rotation);
         // GrabManScript grabManScript = grabmanObject.GetComponent<GrabManScript>();
 
