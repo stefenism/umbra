@@ -69,6 +69,7 @@ public class PlayerStateManager : MonoBehaviour {
     public void SetPlayerDead() {
         Debug.Log("player is dead");
         playerState = PlayerState.DEAD;
+        mover.tallAnimator.SetBool("Dead", true);
     }
 
     public bool IsPlayerInLight() { return playerState == PlayerState.LIGHT; }

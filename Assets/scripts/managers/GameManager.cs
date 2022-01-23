@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -20,6 +21,11 @@ public class GameManager : MonoBehaviour {
 
     static public void RespawnPlayer() {
         GameManager.gameDaddy.player.transform.position = GameManager.gameDaddy.currentPlayerSpawn.position;
+    }
+
+    static public void ReloadCurrentScene() {
+        Resources.UnloadUnusedAssets();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }
     
 }
