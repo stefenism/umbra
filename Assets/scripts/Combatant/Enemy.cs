@@ -145,6 +145,7 @@ public class Enemy : Combatant
         RaycastHit2D noGround = Physics2D.Raycast( noGroundCheckPosition.position, -transform.up, checkNoGroundDistance);
         // Debug.DrawRay(noGroundCheckPosition.position, -transform.up, Color.green, checkNoGroundDistance);
         if(noGround.collider == null){
+            Debug.Log("NO gorund flip");
             Flip();
         }
     }
@@ -303,10 +304,13 @@ public class Enemy : Combatant
     }
 
     void Flip() {
+        rb.velocity = Vector2.zero;
+        Debug.Log("FLIP is happening " + facingRight);
         facingRight = !facingRight;
-
+        Debug.Log("Scale " + transform.localScale);
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
+        Debug.Log("AFter: " + theScale);
         transform.localScale = theScale;
 
     }
@@ -365,6 +369,7 @@ public class Enemy : Combatant
     private void OnCollisionEnter2D(Collision2D other) {
         if(isEnemyPatrolling()){
             if(other.gameObject.tag == "Ground"){
+                Debug.Log("FLIPPIN OUT YO");
                 Flip();
             }
         }

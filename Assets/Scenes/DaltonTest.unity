@@ -203,8 +203,12 @@ PrefabInstance:
       value: 51527749
       objectReference: {fileID: 0}
     - target: {fileID: 3371791717250758175, guid: fda8616f07caad1479e3ae487e15f88f, type: 3}
+      propertyPath: currentState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3371791717250758175, guid: fda8616f07caad1479e3ae487e15f88f, type: 3}
       propertyPath: RequiresSwitch
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fda8616f07caad1479e3ae487e15f88f, type: 3}

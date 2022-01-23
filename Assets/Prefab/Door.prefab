@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3371791716930479810}
   - component: {fileID: 3371791716930479837}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: DoorCollision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 3371791717250758175}
   - component: {fileID: 1900379758807661041}
   - component: {fileID: 7684589413152586603}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,8 +130,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1175498103
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 5213229242370633579, guid: 1097183aea98f3f4a9162b692d7aedd7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  RequiresSwitch: 1
+  RequiresSwitch: 0
   doorObj: {fileID: 3371791716930479811}
   DoorOpenSound: {fileID: 8300000, guid: 331562a40a65bcdbf9c7aa6f78e5f3f1, type: 3}
   VolumeScale: 0.4
