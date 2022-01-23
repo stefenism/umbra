@@ -54,6 +54,9 @@ public class Enemy : Combatant
     public float MinIdleTime = .5f;
     private bool currentlyIdle = false;
 
+    private bool grappled = false;
+
+
     public void Start() {
         startingPosition = gameObject.transform.position;
         player = GameManager.gameDaddy.player.gameObject.transform;
@@ -68,6 +71,8 @@ public class Enemy : Combatant
     }
 
     public override void Update() {
+        if (grappled)
+            return;
         Scan();
         setAnims();
 
@@ -92,6 +97,8 @@ public class Enemy : Combatant
     }
 
     private void FixedUpdate() {
+        if (grappled)
+            return;
         if(isEnemyPatrolling()) {
             moveForward();
         }
@@ -339,6 +346,11 @@ public class Enemy : Combatant
                 Flip();
             }
         }
+    }
+
+    public void OnGrapple() {
+        grappled = true;
+        Debug.Log("Grappled");
     }
 
 

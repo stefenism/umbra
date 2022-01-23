@@ -55,6 +55,8 @@ public class PlayerMovement : MonoBehaviour {
     public Animator tallAnimator;
     private bool killControls;
 
+    public GameObject deadGuy;
+
     private void Awake() {
         rb = ballBoy.GetComponent<Rigidbody2D>();
         if (StartAsBall) {
@@ -347,6 +349,7 @@ public class PlayerMovement : MonoBehaviour {
             tallAnimator.SetBool("Fly", true);
             rb.velocity = Vector3.zero;
             killControls = true;
+            Instantiate(deadGuy, tallBoy.transform.position, tallBoy.transform.rotation);
         }
     }
 
