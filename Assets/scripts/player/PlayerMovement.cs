@@ -57,6 +57,7 @@ public class PlayerMovement : MonoBehaviour {
     private bool killControls;
 
     public GameObject deadGuy;
+    public GameObject grabMan;
 
     private void Awake() {
         rb = ballBoy.GetComponent<Rigidbody2D>();
@@ -86,11 +87,11 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        Debug.Log("kill controls is:" + killControls);
+        //Debug.Log("kill controls is:" + killControls);
         if (killControls) {
             return;
         }
-        Debug.Log("inside fixed update");
+        //Debug.Log("inside fixed update");
         if (playerState.IsPlayerOnGround() || playerState.IsPlayerGrappling()) {
             Debug.Log("inside fixed update run");
             run();
@@ -364,11 +365,26 @@ public class PlayerMovement : MonoBehaviour {
             ballBoy.transform.localScale = theScale;
             tallAnimator.SetBool("Walking", false);
             tallAnimator.SetBool("WalkingBackward", false);
+            ballBoy.transform.position = headSetPosition.transform.position;
             tallAnimator.SetBool("Fly", true);
             rb.velocity = Vector3.zero;
             killControls = true;
-            Instantiate(deadGuy, tallBoy.transform.position, tallBoy.transform.rotation);
+            explodeEnemy(playerBrain.getGrappledEnemy());
         }
+    }
+
+    public void explodeEnemy(Enemy enemy) {
+        // GameObject grabManObject = Instantiate(grabMan, transform.position, transform.rotation);
+        // GrabManScript grabManScript = grabmanObject.GetComponent<GrabManScript>();
+
+        if(tallBoy.activeSelf) {
+            ballBoy.transform.position = tallBoy.transform.position;
+        }
+        GrabManScript grabManScript = Instantiate(grabMan, transform.position, transform.rotation).GetComponent<GrabManScript>();
+        grabManScript.manPosition = enemy.transform.position;
+        grabManScript.deathPoint = tallBoy.activeSelf ? tallBoy.transform.position : ballBoy.transform.position;
+        grabManScript.flipMan = facingRight ? true : false;
+        playerBrain.killEnemy(enemy);
     }
 
     public Vector3 currentEnemyTarget() {
@@ -380,7 +396,6 @@ public class PlayerMovement : MonoBehaviour {
         rb = ballBoy.GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
         tallBoy.SetActive(false);
-        ballBoy.transform.position = headSetPosition.transform.position;
         ballBoy.SetActive(true);
         playerState.usingState = PlayerStateManager.UsingState.BALL;
         boxCollider = ballBoy.GetComponent<BoxCollider2D>();

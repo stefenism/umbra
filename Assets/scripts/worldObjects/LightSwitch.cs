@@ -9,6 +9,8 @@ public class LightSwitch : InteractableObject {
     public Sprite offSprite;
     private SpriteRenderer renderer;
 
+    public AudioClip SwitchSound;
+
     private void Awake() {
         renderer = GetComponent<SpriteRenderer>();
         currentState = lightObject.enabled;

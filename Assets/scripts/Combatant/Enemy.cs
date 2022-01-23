@@ -370,6 +370,7 @@ public class Enemy : Combatant
         transform.localScale = theScale;
         setEnemyGrappled();
         anim.SetBool("Struggle", true);
+        rb.simulated = false;
     }
 
 

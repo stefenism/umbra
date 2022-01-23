@@ -23,7 +23,6 @@ public class PlayerEventPasser : MonoBehaviour
     }
 
     public void StartMovement() {
-        Debug.Log("---------------RESTARTING MOVEMENT");
         player.GetPlayerMovement().ContinuePlayerInput();
     }
 

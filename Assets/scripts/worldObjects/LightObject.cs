@@ -46,7 +46,7 @@ public class LightObject : MonoBehaviour {
         RaycastHit2D hit;
         if (GetDistanceFromGameObject(player) < GetOuterRadius()) {
             hit = Physics2D.Raycast(lightObj.gameObject.transform.position, (player.transform.position - lightObj.gameObject.transform.position), (float)GetOuterRadius(), ~ignoreMask);
-            if (hit.collider != null && hit.collider.gameObject == player) { //Hit GameObject
+            if (hit.collider != null && hit.collider.gameObject.tag == "Player") { //Hit GameObject
                 return true;
             }
         }
