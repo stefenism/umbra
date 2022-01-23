@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public Animator anim;
     public BoxCollider2D boxCollider;
-    
+
     private float horizontalMovement;
     private float verticalMovement;
     public PlayerStateManager playerState;
@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Awake() {
         rb = ballBoy.GetComponent<Rigidbody2D>();
-        if (StartAsBall) { 
+        if (StartAsBall) {
             tallBoy.SetActive(false);
             ballBoy.SetActive(true);
         } else {
@@ -216,11 +216,12 @@ public class PlayerMovement : MonoBehaviour {
 
     public void setGroundMode() {
         //Play tall boy transformation animation
+        rb.gravityScale = 1;
         SwitchToTallBoy();
     }
 
     public void setGravityScale(float newScale) { rb.gravityScale = newScale; }
-    
+
     public List<Vector3> getPlayerHitPositions() {
         if (playerState.usingState == PlayerStateManager.UsingState.BALL) {
             getHitPositions(ballBoy.transform.position);
@@ -229,14 +230,14 @@ public class PlayerMovement : MonoBehaviour {
             getHitPositions(tallBoy.transform.position);
             return hitPositions;
         }
-	}
+    }
 
     public void getHitPositions(Vector3 position) {
-		hitPositions.Clear();
-		hitPositions.Add(new Vector3(position.x + boxCollider.bounds.extents.x, position.y, position.z));
-		hitPositions.Add(new Vector3(position.x - boxCollider.bounds.extents.x, position.y, position.z));
-		hitPositions.Add(position);
-	}
+        hitPositions.Clear();
+        hitPositions.Add(new Vector3(position.x + boxCollider.bounds.extents.x, position.y, position.z));
+        hitPositions.Add(new Vector3(position.x - boxCollider.bounds.extents.x, position.y, position.z));
+        hitPositions.Add(position);
+    }
 
     void DetermineJumpButton() {
         if (grounded && !Input.GetButton("Jump")) {
@@ -281,7 +282,6 @@ public class PlayerMovement : MonoBehaviour {
         if (playerState.HasEnemeyGrappled) { //Can't jump if enemy in hands
             return;
         }
-        Debug.Log("jumping now");
         Vector2 jumpVector = rb.velocity;
         jumpVector.y = jumpForce;
 
@@ -291,21 +291,27 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     public void SwitchToTallBoy() {
-        rb = tallBoy.GetComponent<Rigidbody2D>();
-        ballBoy.SetActive(false);
-        tallBoy.transform.position = new Vector3(ballBoy.transform.position.x, ballBoy.transform.position.y + .25f);
-        tallBoy.SetActive(true);
-        playerState.usingState = PlayerStateManager.UsingState.TALLBOY;
-        boxCollider = tallBoy.GetComponent<BoxCollider2D>();
+        if (!tallBoy.activeSelf) {
+            rb = tallBoy.GetComponent<Rigidbody2D>();
+            rb.gravityScale = 1f;
+            ballBoy.SetActive(false);
+            tallBoy.transform.position = ballBoy.transform.position; //new Vector3(ballBoy.transform.position.x, ballBoy.transform.position.y);
+            tallBoy.SetActive(true);
+            playerState.usingState = PlayerStateManager.UsingState.TALLBOY;
+            boxCollider = tallBoy.GetComponent<BoxCollider2D>();
+        }
     }
 
     public void SwitchToBall() {
-        rb = ballBoy.GetComponent<Rigidbody2D>();
-        tallBoy.SetActive(false);
-        ballBoy.transform.position = headSetPosition.transform.position;
-        ballBoy.SetActive(true);
-        playerState.usingState = PlayerStateManager.UsingState.BALL;
-        boxCollider = ballBoy.GetComponent<BoxCollider2D>();
+        if (!ballBoy.activeSelf) {
+            rb = ballBoy.GetComponent<Rigidbody2D>();
+            rb.gravityScale = 0f;
+            tallBoy.SetActive(false);
+            ballBoy.transform.position = headSetPosition.transform.position;
+            ballBoy.SetActive(true);
+            playerState.usingState = PlayerStateManager.UsingState.BALL;
+            boxCollider = ballBoy.GetComponent<BoxCollider2D>();
+        }
     }
 
     public GameObject GetUsedStateObject() {
