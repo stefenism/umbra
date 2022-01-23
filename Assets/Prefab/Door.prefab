@@ -185,7 +185,7 @@ MonoBehaviour:
   currentState: 0
   RequiresSwitch: 1
   doorObj: {fileID: 3371791716930479811}
-  DoorOpenSound: {fileID: 8300000, guid: f4a83c4d27574a14b9b5f8d5e702c5af, type: 3}
+  DoorOpenSound: {fileID: 8300000, guid: 331562a40a65bcdbf9c7aa6f78e5f3f1, type: 3}
   VolumeScale: 0.4
 --- !u!95 &1900379758807661041
 Animator:

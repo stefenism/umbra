@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightSwitch : InteractableObject {
+public class DoorLightSwitch : InteractableObject {
 
     public LightObject[] lightObjects;
+    public Door[] doors;
     public Sprite onSprite;
     public Sprite offSprite;
     private SpriteRenderer renderer;
@@ -25,17 +26,19 @@ public class LightSwitch : InteractableObject {
         foreach (LightObject light in lightObjects) {
             light.ToggleLight();
         }
+        foreach (Door door in doors) {
+            door.ToggleDoor();
+        }
         currentState = !currentState;
         UpdateSprite(currentState);
         PlaySound();
     }
 
     public void UpdateSprite(bool b) {
-            renderer.sprite = b ? onSprite : offSprite;
+        renderer.sprite = b ? onSprite : offSprite;
     }
 
     public void PlaySound() {
         audioSource.PlayOneShot(SwitchSound, VolumeScale);
     }
 }
-
