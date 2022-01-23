@@ -76,9 +76,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.33333334
-    functionName: FinishSwitchToBall
+    functionName: TestMethod
     data: 
-    objectReferenceParameter: {fileID: 11500000, guid: 05fc0df4ebef85a46a83d9d8f8cba92b, type: 3}
+    objectReferenceParameter: {fileID: 11500000, guid: 241fa79c9b4a867498e955b46f0873ef, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
