@@ -20,19 +20,19 @@ public class PlayerMovement : MonoBehaviour {
     public Player playerBrain;
 
     [Header("shadow flight")]
-    public float flightSpeed = 1.5f;
+    public float flightSpeed = 3f;
     public float flightAccel = .1f;
     public float flightDecel = .075f;
-    public float maxFlightSpeed = 3;
+    public float maxFlightSpeed = 6;
 
     [Header("glide (light mode) ")]
     public float verticalGlideSpeed = .5f;
     public float horizontalGlideSpeed = 2;
     public float glideAccel = .075f;
     public float glideDecel = 0.075f;
-    public float maxVerticalGlideSpeed = 1;
-    public float maxHorizontalGlideSpeed = 2;
-    public float glideGravityModifier = .25f;
+    public float maxVerticalGlideSpeed = 6;
+    public float maxHorizontalGlideSpeed = 6;
+    public float glideGravityModifier = 1.5f;
 
     [Header("horizontal movement")]
     public float runSpeed = 2;
