@@ -51,6 +51,9 @@ public class PlayerMovement : MonoBehaviour {
     public float airSpeed = 2f;
 
     public List<Vector3> hitPositions = new List<Vector3>();
+    public Animator ballAnimator;
+    public Animator tallAnimator;
+    private bool killControls;
 
     private void Awake() {
         rb = ballBoy.GetComponent<Rigidbody2D>();
@@ -78,6 +81,9 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+        if (killControls) {
+            return;
+        }
         if (playerState.IsPlayerOnGround()) {
             run();
 
@@ -313,7 +319,7 @@ public class PlayerMovement : MonoBehaviour {
             rb = tallBoy.GetComponent<Rigidbody2D>();
             rb.gravityScale = 1f;
             ballBoy.SetActive(false);
-            tallBoy.transform.position = ballBoy.transform.position; //new Vector3(ballBoy.transform.position.x, ballBoy.transform.position.y);
+            tallBoy.transform.position = ballBoy.transform.position;
             tallBoy.SetActive(true);
             playerState.usingState = PlayerStateManager.UsingState.TALLBOY;
             boxCollider = tallBoy.GetComponent<BoxCollider2D>();
@@ -321,6 +327,10 @@ public class PlayerMovement : MonoBehaviour {
             Vector3 theScale = tallBoy.transform.localScale;
             theScale.x = facingRight ? 1 : -1;
             tallBoy.transform.localScale = theScale;
+            
+            StopPlayerInput();
+            tallAnimator.Rebind();
+            tallAnimator.Update(0f);
         }
     }
 
@@ -337,11 +347,26 @@ public class PlayerMovement : MonoBehaviour {
             Vector3 theScale = ballBoy.transform.localScale;
             theScale.x = facingRight ? 1 : -1;
             ballBoy.transform.localScale = theScale;
+
+            tallAnimator.SetBool("Fly", true);
+            rb.velocity = Vector3.zero;
+            killControls = true;
         }
     }
 
     public Vector3 currentEnemyTarget() {
         return GetUsedStateObject().transform.position;
+    }
+
+    public void FinishSwitchToBall() {
+        killControls = false;
+        rb = ballBoy.GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0f;
+        tallBoy.SetActive(false);
+        ballBoy.transform.position = headSetPosition.transform.position;
+        ballBoy.SetActive(true);
+        playerState.usingState = PlayerStateManager.UsingState.BALL;
+        boxCollider = ballBoy.GetComponent<BoxCollider2D>();
     }
 
     public GameObject GetUsedStateObject() {
@@ -350,5 +375,13 @@ public class PlayerMovement : MonoBehaviour {
         } else {
             return tallBoy;
         }
+    }
+
+    public void StopPlayerInput() {
+        killControls = true;
+    }
+
+    public void ContinuePlayerInput() {
+        killControls = false;
     }
 }

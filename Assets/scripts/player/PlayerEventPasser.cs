@@ -17,4 +17,12 @@ public class PlayerEventPasser : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision) {
         player.PassedPlayerCollisionExit(collision);
     }
+
+    public void TestMethod() {
+        player.GetPlayerMovement().FinishSwitchToBall();
+    }
+
+    public void StartMovement() {
+        player.GetPlayerMovement().ContinuePlayerInput();
+    }
 }
