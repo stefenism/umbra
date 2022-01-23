@@ -381,7 +381,7 @@ public class PlayerMovement : MonoBehaviour {
             ballBoy.transform.localScale = theScale;
             tallAnimator.SetBool("Walking", false);
             tallAnimator.SetBool("WalkingBackward", false);
-            ballBoy.transform.position = headSetPosition.transform.position;
+            ballBoy.transform.position = tallBoy.transform.position;
             tallAnimator.SetBool("Fly", true);
             PlaySound(SwitchToBallSound, .5f);
             rb.velocity = Vector3.zero;
