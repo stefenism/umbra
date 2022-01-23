@@ -14,7 +14,7 @@ public class LevelTransfer : MonoBehaviour {
     }
 
     public void GotoNextLevel() {
-        SceneManager.LoadScene(NextLeveName);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
 
