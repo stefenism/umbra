@@ -26,6 +26,9 @@ public class Player : Combatant {
 
     // Update is called once per frame
     void Update() {
+        if(stateManager.IsPlayerDead()){
+            return;
+        }
         if (waiting) {
             if (timeWaited >= timeToChange) {
                 timeWaited = 0f;

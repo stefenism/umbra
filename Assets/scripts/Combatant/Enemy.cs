@@ -237,12 +237,15 @@ public class Enemy : Combatant
         }
 
         if( bulletHit.collider.gameObject.tag == "Enemy") {}
+        if( bulletHit.collider.gameObject.tag == "Player") {
+            GameManager.gameDaddy.player.playerState.SetPlayerDead();
+        }
     }
 
-    Vector2 find_end_point() {
+    RaycastHit2D find_end_point() {
         bulletHit = Physics2D.Raycast(transform.position, (enemyGun.transform.right * this.transform.localScale.x), range * 2, playerLayer);
 
-        return bulletHit.point;
+        return bulletHit;
     }
 
     void checkGroundAngle(){
@@ -278,11 +281,14 @@ public class Enemy : Combatant
 
             shootStartPoint = bulletStartPosition.position - ((this.transform.right * this.transform.localScale.x )/2);
             bulletTracer.SetPosition(0, shootStartPoint);
-            Vector2 endPosition = find_end_point();
+            RaycastHit2D bulletHit = find_end_point();
+            Vector2 endPosition = bulletHit.point;
             bulletTracer.SetPosition(1, endPosition);
             bulletTracer.enabled = true;
 
-            check_hit();
+            if(!bulletHit.collider.isTrigger){
+                check_hit();
+            }
         }
 
         Vector2 vectorToTarget = target - (Mathf.Sign(transform.localRotation.x) * enemyGun.gameObject.transform.position);

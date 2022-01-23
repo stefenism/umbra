@@ -86,6 +86,11 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void Update() {
+
+        if(playerState.IsPlayerDead()) {
+            return;
+        }
+        
         checkInput();
 
         checkLightGrounded();
