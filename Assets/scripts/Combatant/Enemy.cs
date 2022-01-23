@@ -57,6 +57,10 @@ public class Enemy : Combatant
 
     private bool grappled = false;
 
+    private AudioSource audioSource;
+    public AudioClip ShootAudio;
+    public AudioClip GunCockAudio;
+
 
     public void Start() {
         startingPosition = gameObject.transform.position;
@@ -65,7 +69,7 @@ public class Enemy : Combatant
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         enemyGun = transform.GetChild(0).GetComponent<EnemyGun>();
-
+        audioSource = GetComponent<AudioSource>();
         bulletTracer = GetComponentInChildren<LineRenderer>();
         bulletTracer.positionCount = 2;
         bulletTracer.enabled = false;
@@ -371,6 +375,10 @@ public class Enemy : Combatant
         setEnemyGrappled();
         anim.SetBool("Struggle", true);
         rb.simulated = false;
+    }
+
+    public void PlayAudio(AudioClip clip, float VolumeScale) {
+        audioSource.PlayOneShot(clip, VolumeScale);
     }
 
 

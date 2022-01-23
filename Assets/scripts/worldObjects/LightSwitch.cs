@@ -9,9 +9,12 @@ public class LightSwitch : InteractableObject {
     public Sprite offSprite;
     private SpriteRenderer renderer;
 
+    private AudioSource audioSource;
     public AudioClip SwitchSound;
+    public float VolumeScale = 1f;
 
     private void Awake() {
+        audioSource = GetComponent<AudioSource>();
         renderer = GetComponent<SpriteRenderer>();
         currentState = lightObject.enabled;
         UpdateSprite(lightObject.enabled);
@@ -21,9 +24,14 @@ public class LightSwitch : InteractableObject {
         lightObject.ToggleLight();
         currentState = !currentState;
         UpdateSprite(currentState);
+        PlaySound();
     }
 
     public void UpdateSprite(bool b) {
             renderer.sprite = b ? onSprite : offSprite;
+    }
+
+    public void PlaySound() {
+        audioSource.PlayOneShot(SwitchSound, VolumeScale);
     }
 }
