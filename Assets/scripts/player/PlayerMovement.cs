@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour {
 
         checkLightGrounded();
 
-        if(Input.GetKeyDown("b")){
+        if(Input.GetKeyDown("x")){
             playerState.toggleMode();
         }
     }

@@ -19,11 +19,14 @@ public class Player : Combatant {
     // Update is called once per frame
     void Update() {
         if (IsInLight()) {
+            Debug.Log("is in light");
             if (!stateManager.IsPlayerInLight()){
                 stateManager.SetPlayerInLight();
             }
         } else {
+            Debug.Log("isn't in light");
             if (!stateManager.IsPlayerInDark()) {
+                Debug.Log("isn't in dark");
                 stateManager.SetPlayerInDark();
                 if (stateManager.HasEnemeyGrappled) {
                     grappledEnemy.Kill();

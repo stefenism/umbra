@@ -67,7 +67,6 @@ public class Enemy : Combatant
         setAnims();
 
         if(inRange) {
-            Debug.Log("enemy is in range");
             checkGroundAngle();
 
             if(enemyGun.isGunShooting()) {
@@ -91,28 +90,19 @@ public class Enemy : Combatant
 
     void checkFlip() {
         if(rb.velocity.x > 0 && !facingRight ) {
-            Debug.Log("moving right facing left");
-            Debug.Log("0.0 > 0 " + (0.0 > 0));
-            Debug.Log("0.0 > 0 " + (0.0f > 0));
             Flip();
         } else if ( rb.velocity.x < 0 && facingRight ) {
-            Debug.Log("moving left facing right");
             Flip();
         } else if ( rb.velocity.x == 0) {
-            Debug.Log("person is not moving");
             return;
         }
     }
 
     void checkFacing() {
         Vector3 theScale = transform.localScale;
-        Debug.Log("checking facing");
-        Debug.Log("player position " + player.position);
         if( player.position.x > transform.position.x && !facingRight) {
-            Debug.Log("player is right, person left");
             Flip();
         } else if ( player.position.x < transform.position.x && facingRight ) {
-            Debug.Log("player is left person right");
             Flip();
         }
     }
@@ -149,9 +139,7 @@ public class Enemy : Combatant
 
             if(hit.collider != null){
                 if(hit.collider.gameObject.tag == "Player"){
-                    Debug.Log("hit a player");
                     if (GameManager.gameDaddy.player.playerState.IsPlayerInLight() || GameManager.gameDaddy.player.playerState.IsPlayerOnGround()){
-                        Debug.Log("player is in light");
                         if(acceptableLineOfSight){
                             if(!acceptableLineOfSight){
                                 StopAllCoroutines();
@@ -189,7 +177,6 @@ public class Enemy : Combatant
     }
 
     void ShootTransition() {
-        Debug.Log("shoot transition");
         setEnemyShooting();
         //anim.SetBool("Shoot", true);
         checkFacing();

@@ -23,6 +23,7 @@ public class PlayerStateManager : MonoBehaviour {
     }
 
     public void toggleMode(){
+        Debug.Log("toggling mode");
         if(IsPlayerInLight()){
             SetPlayerOnGround();
         } else if(IsPlayerInDark()){
