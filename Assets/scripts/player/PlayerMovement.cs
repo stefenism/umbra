@@ -369,14 +369,13 @@ public class PlayerMovement : MonoBehaviour {
             tallAnimator.SetBool("Fly", true);
             rb.velocity = Vector3.zero;
             killControls = true;
-            explodeEnemy(playerBrain.getGrappledEnemy());
+            if(playerBrain.getGrappledEnemy() != null){
+                explodeEnemy(playerBrain.getGrappledEnemy());
+            }
         }
     }
 
     public void explodeEnemy(Enemy enemy) {
-        if(enemy == null) {
-            return;
-        }
         // GameObject grabManObject = Instantiate(grabMan, transform.position, transform.rotation);
         // GrabManScript grabManScript = grabmanObject.GetComponent<GrabManScript>();
 
