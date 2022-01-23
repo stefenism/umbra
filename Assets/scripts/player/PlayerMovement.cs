@@ -1,8 +1,11 @@
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
-    
+
     public Rigidbody2D rb;
+    public GameObject tallBoy;
+    public GameObject ballBoy;
+    public bool StartAsBall;
     private float horizontalMovement;
     private float verticalMovement;
     public PlayerStateManager playerState;
@@ -39,7 +42,14 @@ public class PlayerMovement : MonoBehaviour {
     public float airSpeed = 2f;
 
     private void Awake() {
-        rb = GetComponent<Rigidbody2D>();
+        if (StartAsBall) {
+            rb = ballBoy.GetComponent<Rigidbody2D>();
+            //tallBoy.SetActive(false);
+        } else {
+            rb = tallBoy.GetComponent<Rigidbody2D>();
+            ballBoy.SetActive(false);
+        }
+
         playerState = GetComponent<PlayerStateManager>();
     }
 
@@ -48,33 +58,33 @@ public class PlayerMovement : MonoBehaviour {
 
         checkLightGrounded();
 
-        if(Input.GetKeyDown("b")){
+        if (Input.GetKeyDown("b")) {
             playerState.toggleMode();
         }
     }
 
     private void FixedUpdate() {
-        if(playerState.IsPlayerOnGround()){
+        if (playerState.IsPlayerOnGround()) {
             run();
 
-            if(jumping){
+            if (jumping) {
                 Jump();
             }
 
-            if(!grounded && jumping){
+            if (!grounded && jumping) {
                 jumpDuration += Time.fixedDeltaTime;
             }
 
-            if(grounded){
+            if (grounded) {
                 jumpDuration = 0;
             }
         }
 
-        if(playerState.IsPlayerInLight()){
+        if (playerState.IsPlayerInLight()) {
             glide();
         }
 
-        if(playerState.IsPlayerInDark()){
+        if (playerState.IsPlayerInDark()) {
             fly();
         }
     }
@@ -83,7 +93,7 @@ public class PlayerMovement : MonoBehaviour {
         horizontalMovement = Input.GetAxis("Horizontal");
         verticalMovement = Input.GetAxis("Vertical");
 
-        if(grounded){
+        if (grounded) {
             // setGravityScale(1);
             jumping = false;
             canJump = true;
@@ -94,7 +104,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void checkLightGrounded() {
-        if(playerState.IsPlayerInLight() && grounded){
+        if (playerState.IsPlayerInLight() && grounded) {
             playerState.SetPlayerOnGround();
         }
     }
@@ -102,6 +112,13 @@ public class PlayerMovement : MonoBehaviour {
     private void run() {
         Vector2 newVelocity = rb.velocity;
         newVelocity.x = horizontalMovement * runSpeed;
+        if (!playerState.HasEnemeyGrappled) { //Once a enemy has been grappled, don't flip sprite anymore
+            if (newVelocity.x < 0) {
+                //Moving left, flip sprite
+            } else if (newVelocity.x > 0) { //Don't fiip when 0
+                //Moving 
+            }
+        }
         rb.velocity = newVelocity;
     }
 
@@ -109,18 +126,18 @@ public class PlayerMovement : MonoBehaviour {
         Vector2 newVelocity = rb.velocity;
 
         // if you're moving
-        if( horizontalMovement != 0 ){
+        if (horizontalMovement != 0) {
 
-            if(Mathf.Abs(rb.velocity.x) <= maxFlightSpeed){
+            if (Mathf.Abs(rb.velocity.x) <= maxFlightSpeed) {
                 newVelocity.x += (horizontalMovement * (flightSpeed * flightAccel));
             } else {
                 newVelocity.x -= rb.velocity.x * flightDecel;
             }
         }
 
-        if( verticalMovement != 0){
+        if (verticalMovement != 0) {
 
-            if(Mathf.Abs(rb.velocity.y) <= maxFlightSpeed){
+            if (Mathf.Abs(rb.velocity.y) <= maxFlightSpeed) {
                 newVelocity.y += (verticalMovement * (flightSpeed * flightAccel));
             } else {
                 newVelocity.y -= rb.velocity.y * flightDecel;
@@ -128,14 +145,14 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         // input has stopped decelerate
-        if( horizontalMovement == 0 ) {
-            if(Mathf.Abs(newVelocity.x) > 0){
+        if (horizontalMovement == 0) {
+            if (Mathf.Abs(newVelocity.x) > 0) {
                 newVelocity.x -= rb.velocity.x * flightDecel;
             }
         }
 
-        if( verticalMovement == 0 ) {
-            if(Mathf.Abs(newVelocity.y) > 0){
+        if (verticalMovement == 0) {
+            if (Mathf.Abs(newVelocity.y) > 0) {
                 newVelocity.y -= rb.velocity.y * flightDecel;
             }
         }
@@ -147,25 +164,25 @@ public class PlayerMovement : MonoBehaviour {
     private void glide() {
         Vector2 newVelocity = rb.velocity;
 
-        if(horizontalMovement != 0) {
+        if (horizontalMovement != 0) {
 
-            if(Mathf.Abs(rb.velocity.x) <= maxHorizontalGlideSpeed){
+            if (Mathf.Abs(rb.velocity.x) <= maxHorizontalGlideSpeed) {
                 newVelocity.x += (horizontalMovement * (horizontalGlideSpeed * glideAccel));
             } else {
                 newVelocity.x -= rb.velocity.x * glideDecel;
             }
         }
 
-        if( verticalMovement != 0) {
-            if(rb.velocity.y <= 0 && Mathf.Abs(rb.velocity.y) < maxVerticalGlideSpeed){
+        if (verticalMovement != 0) {
+            if (rb.velocity.y <= 0 && Mathf.Abs(rb.velocity.y) < maxVerticalGlideSpeed) {
                 newVelocity.y += (verticalMovement * (verticalGlideSpeed * glideAccel));
             } else {
                 newVelocity.y -= rb.velocity.y * glideDecel;
             }
         }
 
-        if(horizontalMovement == 0 ) {
-            if(Mathf.Abs(newVelocity.x) > 0){
+        if (horizontalMovement == 0) {
+            if (Mathf.Abs(newVelocity.x) > 0) {
                 newVelocity.x -= rb.velocity.x * glideDecel;
             }
         }
@@ -173,54 +190,54 @@ public class PlayerMovement : MonoBehaviour {
         rb.velocity = newVelocity;
     }
 
-    public void setDarknessMode(){
+    public void setDarknessMode() {
         rb.gravityScale = 0;
     }
 
-    public void setLightMode(){
+    public void setLightMode() {
         rb.gravityScale = 1;
     }
 
-    public void setGroundMode(){
+    public void setGroundMode() {
 
     }
 
-    public void setGravityScale(float newScale){rb.gravityScale = newScale;}
+    public void setGravityScale(float newScale) { rb.gravityScale = newScale; }
 
     void DetermineJumpButton() {
-        if( grounded && !Input.GetButton("Jump")) {
+        if (grounded && !Input.GetButton("Jump")) {
             jumpAllowed = true;
         }
     }
 
-    void JumpButton () {
-        if(!Input.GetButton("Jump")) {
-            if(rb.velocity.y >= 0){
+    void JumpButton() {
+        if (!Input.GetButton("Jump")) {
+            if (rb.velocity.y >= 0) {
                 Vector2 dragForce = rb.velocity;
                 dragForce.y = rb.velocity.y * airDrag;
 
                 rb.velocity = dragForce;
 
-                if(!grounded ){
+                if (!grounded) {
                     jumpDuration = jumpTime;
                 }
             }
         }
 
-        if(Input.GetButton("Jump") && jumpAllowed){
+        if (Input.GetButton("Jump") && jumpAllowed) {
             jumping = true;
             canJump = false;
         }
 
-        if(jumpDuration >= jumpTime){
+        if (jumpDuration >= jumpTime) {
             jumping = false;
             jumpAllowed = false;
 
-            if(rb.velocity.y < 0 && !playerState.IsPlayerInDark() && !playerState.IsPlayerInLight()){
+            if (rb.velocity.y < 0 && !playerState.IsPlayerInDark() && !playerState.IsPlayerInLight()) {
                 setGravityScale(gravityDropModifier);
             }
 
-            if(rb.velocity.y < 0 && playerState.IsPlayerInLight()){
+            if (rb.velocity.y < 0 && playerState.IsPlayerInLight()) {
                 setGravityScale(glideGravityModifier);
             }
         }
@@ -234,8 +251,28 @@ public class PlayerMovement : MonoBehaviour {
         Vector2 jumpVector = rb.velocity;
         jumpVector.y = jumpForce;
 
-        if(jumpDuration < jumpTime){
+        if (jumpDuration < jumpTime) {
             rb.velocity = jumpVector;
+        }
+    }
+
+    public void SwitchToTallBoy() {
+        rb = tallBoy.GetComponent<Rigidbody2D>();
+        ballBoy.SetActive(false);
+        playerState.usingState = PlayerStateManager.UsingState.TALLBOY;
+    }
+
+    public void SwitchToBall() {
+        rb = ballBoy.GetComponent<Rigidbody2D>();
+        tallBoy.SetActive(false);
+        playerState.usingState = PlayerStateManager.UsingState.BALL;
+    }
+
+    public GameObject GetUsedStateObject() {
+        if (playerState.usingState == PlayerStateManager.UsingState.BALL) {
+            return ballBoy;
+        } else {
+            return tallBoy;
         }
     }
 }
