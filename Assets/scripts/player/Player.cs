@@ -111,6 +111,16 @@ public class Player : Combatant {
         }
     }
 
+    public void killEnemy() {
+        if(!grappledEnemy){
+            return;
+        }
+
+        grappledEnemy.transform.parent = null;
+        Destroy(grappledEnemy.gameObject);
+        grappledEnemy = null;
+    }
+
     public bool IsInLight() {
         foreach (LightObject light in lights) {
             if (light.IsGameObjectWithinLight(mover.GetUsedStateObject()))

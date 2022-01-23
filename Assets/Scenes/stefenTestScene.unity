@@ -194,6 +194,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GrappleTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 8547417935435711750, guid: 6386e4f48d733ee4c8b7430b35c81873, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6386e4f48d733ee4c8b7430b35c81873, type: 3}
 --- !u!1 &290032351
@@ -1013,6 +1017,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   lightObject: {fileID: 1834149092}
+  onSprite: {fileID: 0}
+  offSprite: {fileID: 0}
 --- !u!61 &760087254
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1956,6 +1962,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8777156365641305460, guid: 83f3b939b23879f3abefab2a89149bca, type: 3}
+      propertyPath: speed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8777156365641305462, guid: 83f3b939b23879f3abefab2a89149bca, type: 3}
       propertyPath: m_RootOrder
       value: 5

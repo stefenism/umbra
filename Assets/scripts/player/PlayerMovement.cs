@@ -367,7 +367,9 @@ public class PlayerMovement : MonoBehaviour {
             tallAnimator.SetBool("Fly", true);
             rb.velocity = Vector3.zero;
             killControls = true;
-            Instantiate(deadGuy, tallBoy.transform.position, tallBoy.transform.rotation);
+            Transform grappleLocation = tallBoy.transform.GetChild(0);
+            Instantiate(deadGuy, grappleLocation.position, grappleLocation.rotation);
+            playerBrain.killEnemy();
         }
     }
 
