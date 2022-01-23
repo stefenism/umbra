@@ -18,6 +18,8 @@ public class Enemy : Combatant
     Animator gunAnim;
 
     public Transform bulletStartPosition;
+    public Transform noGroundCheckPosition;
+    public float checkNoGroundDistance;
 
     public bool facingRight = true;
 
@@ -85,6 +87,14 @@ public class Enemy : Combatant
         if(!(enemyState == EnemyState.SHOOTING)){
             checkFlip();
         }
+
+        checkNoGround();
+    }
+
+    private void FixedUpdate() {
+        if(isEnemyPatrolling()) {
+            moveForward();
+        }
     }
 
     void setAnims() {
@@ -108,6 +118,20 @@ public class Enemy : Combatant
         } else if ( player.position.x < transform.position.x && facingRight ) {
             Flip();
         }
+    }
+
+    void checkNoGround() {
+        RaycastHit2D noGround = Physics2D.Raycast( noGroundCheckPosition.position, -transform.up, checkNoGroundDistance);
+        // Debug.DrawRay(noGroundCheckPosition.position, -transform.up, Color.green, checkNoGroundDistance);
+        if(noGround.collider == null){
+            Flip();
+        }
+    }
+
+    void moveForward() {
+        Vector2 newVelocity = rb.velocity;
+        newVelocity.x = transform.localScale.x * speed;
+        rb.velocity = newVelocity;
     }
 
     public override void playerDetected() {
@@ -169,8 +193,9 @@ public class Enemy : Combatant
                 // inRange = true;
         }
 
-
-        cooldown += Time.deltaTime;
+        if(inRange) {
+            cooldown += Time.deltaTime;
+        }
 
         if(cooldown <= fireRate){
             if(cooldown * 5f >= fireRate){
@@ -180,7 +205,6 @@ public class Enemy : Combatant
     }
 
     void ShootTransition() {
-        Debug.Log("gonna shoot");
         setEnemyShooting();
         //anim.SetBool("Shoot", true);
         checkFacing();
@@ -195,7 +219,7 @@ public class Enemy : Combatant
     }
 
     Vector2 find_end_point() {
-        bulletHit = Physics2D.Raycast(enemyGun.transform.position, (enemyGun.transform.right * this.transform.localScale.x), range * 2, playerLayer);
+        bulletHit = Physics2D.Raycast(transform.position, (enemyGun.transform.right * this.transform.localScale.x), range * 2, playerLayer);
 
         return bulletHit.point;
     }
@@ -246,11 +270,8 @@ public class Enemy : Combatant
         float angle = radAngle * Mathf.Rad2Deg + (Mathf.Sign(transform.localRotation.x) * (Mathf.Sign(vectorToTarget.y) * faceOffset));
         angle = Mathf.Clamp(angle, -45f, 45f);
 
-        Debug.Log("gonna rotate gun");
-
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
         Quaternion rotation = Quaternion.Slerp(enemyGun.gameObject.transform.localRotation, q, Time.deltaTime * aimSpeed);
-        Debug.Log("rotation is: " + rotation);
         enemyGun.transform.localRotation = rotation;
     }
 
@@ -263,7 +284,8 @@ public class Enemy : Combatant
 
     }
 
-    // public bool isEnemyShooting(){enemyState == EnemyState.SHOOTING;}
+    public bool isEnemyShooting(){return enemyState == EnemyState.SHOOTING;}
+    public bool isEnemyPatrolling(){return enemyState == EnemyState.PATROLLING;}
 
     public void setEnemyPatrolling(){enemyState = EnemyState.PATROLLING;}
     public void setEnemyShooting(){enemyState = EnemyState.SHOOTING;}
@@ -309,6 +331,14 @@ public class Enemy : Combatant
 
     public double DistanceToPlayer() {
         return Vector2.Distance(gameObject.transform.position, playerScript.currentEnemyTarget());
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if(isEnemyPatrolling()){
+            if(other.gameObject.tag == "Ground"){
+                Flip();
+            }
+        }
     }
 
 
