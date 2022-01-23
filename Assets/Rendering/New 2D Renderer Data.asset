@@ -16,11 +16,11 @@ MonoBehaviour:
   m_RendererFeatureMap: 
   m_TransparencySortMode: 0
   m_TransparencySortAxis: {x: 0, y: 1, z: 0}
-  m_HDREmulationScale: 1
+  m_HDREmulationScale: 1.3
   m_LightBlendStyles:
   - name: Blend Style 0
     maskTextureChannel: 0
-    renderTextureScale: 0.5
+    renderTextureScale: 1
     blendMode: 1
     customBlendFactors:
       multiplicative: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
   - name: Blend Style 1
     maskTextureChannel: 0
     renderTextureScale: 0.5
-    blendMode: 1
+    blendMode: 2
     customBlendFactors:
       multiplicative: 0
       additive: 0

@@ -13,40 +13,45 @@ public class GroundDetect : MonoBehaviour {
 	private Vector2 ray2;
 	private Vector2 ray3;
 
+	public BoxCollider2D boxCollider;
+	public Transform opTransform;
 
 	// Use this for initialization
 	void Start () {
-
 		player = GetComponent<PlayerMovement>();
 
-		width = GetComponent<BoxCollider2D>().bounds.extents.x - 0.01f;
-		height = GetComponent<BoxCollider2D>().bounds.extents.y + 0.02f;
+		width = boxCollider.bounds.extents.x - 0.01f;
+		height = boxCollider.bounds.extents.y + 0.02f;
+	}
 
+	public void Initalize(BoxCollider2D box, Transform opForm) {
+		//player = GetComponent<PlayerMovement>();
 
+		width = boxCollider.bounds.extents.x - 0.01f;
+		height = boxCollider.bounds.extents.y + 0.02f;
 
-
+		opTransform = opForm;
 	}
 
 	// Update is called once per frame
 	void Update () {
-
 		GroundDetection();
 	}
 
 	void GroundDetection()
 	{
 
-		ray2 = new Vector2(transform.position.x + width, transform.position.y);
-		ray3 = new Vector2(transform.position.x - width, transform.position.y);
+		ray2 = new Vector2(opTransform.position.x + width, opTransform.position.y);
+		ray3 = new Vector2(opTransform.position.x - width, opTransform.position.y);
 
 
-		RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, groundDistance, groundLayer);
+		RaycastHit2D hit = Physics2D.Raycast(opTransform.position, -Vector2.up, groundDistance, groundLayer);
 		RaycastHit2D hit2 = Physics2D.Raycast(ray2, -Vector2.up, groundDistance, groundLayer);
 		RaycastHit2D hit3 = Physics2D.Raycast(ray3, -Vector2.up, groundDistance, groundLayer);
 
-		Ray2D landingRay = new Ray2D(transform.position, -Vector2.up);
+		Ray2D landingRay = new Ray2D(opTransform.position, -Vector2.up);
 
-		Debug.DrawRay(transform.position, -Vector2.up * groundDistance);
+		Debug.DrawRay(opTransform.position, -Vector2.up * groundDistance);
 		Debug.DrawRay(ray2, -Vector2.up * groundDistance);
 		Debug.DrawRay(ray3, -Vector2.up * groundDistance);
 

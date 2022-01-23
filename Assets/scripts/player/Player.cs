@@ -8,25 +8,41 @@ public class Player : Combatant {
     private Enemy enemyInRange;
     private LightObject[] lights;
     private PlayerStateManager stateManager;
+    private PlayerMovement mover;
     private Enemy grappledEnemy;
+
+    private float timeToChange = .4f;
+    private float timeWaited = 0f;
+    private bool waiting = false;
 
     private void Awake() {
         lights = FindObjectsOfType<LightObject>();
         stateManager = GetComponent<PlayerStateManager>();
         nearObjects = new List<InteractableObject>();
+        mover = GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update() {
-        if (IsInLight()) {
-            Debug.Log("is in light");
-            if (!stateManager.IsPlayerInLight()){
-                stateManager.SetPlayerInLight();
+        if (waiting) {
+            if (timeWaited >= timeToChange) {
+                timeWaited = 0f;
+                waiting = false;
+            } else {
+                timeWaited += Time.deltaTime;
+                return;
             }
+        }
+        if (IsInLight()) {
+            if (!stateManager.IsPlayerInLight() && !stateManager.IsPlayerOnGround()) {
+                Debug.Log("Switched to light");
+                stateManager.SetPlayerInLight();
+            } 
         } else {
             Debug.Log("isn't in light");
             if (!stateManager.IsPlayerInDark()) {
-                Debug.Log("isn't in dark");
+                Debug.Log("Switched to dark");
+                waiting = true;
                 stateManager.SetPlayerInDark();
                 if (stateManager.HasEnemeyGrappled) {
                     grappledEnemy.Kill();
@@ -44,10 +60,15 @@ public class Player : Combatant {
         if (Input.GetMouseButtonDown(0)) {
             GrappleEnemy();
         }
-        //Check for interact key press
+        if (Input.GetKeyDown("q")) {
+            if (stateManager.usingState == PlayerStateManager.UsingState.BALL)
+                mover.SwitchToTallBoy();
+            else
+                mover.SwitchToBall();
+        }
     }
 
-    private void OnTriggerEnter2D(UnityEngine.Collider2D collision) {
+    public void PassedPlayerCollisionEnter(UnityEngine.Collider2D collision) {
         if (collision.gameObject.TryGetComponent<Bullet>(out Bullet bullet))
             Damage(bullet.Damage);
         if (collision.gameObject.TryGetComponent<InteractableObject>(out InteractableObject interactableObject)) {
@@ -60,7 +81,7 @@ public class Player : Combatant {
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision) {
+    public void PassedPlayerCollisionExit(Collider2D collision) {
         if (collision.gameObject.TryGetComponent<InteractableObject>(out InteractableObject interactableObject)) {
             if (nearObjects.Contains(interactableObject))
                 nearObjects.Remove(interactableObject);
@@ -94,7 +115,7 @@ public class Player : Combatant {
 
     public bool IsInLight() {
         foreach (LightObject light in lights) {
-            if (light.IsGameObjectWithinLight(this.gameObject))
+            if (light.IsGameObjectWithinLight(mover.GetUsedStateObject()))
                 return true;
         }
         return false;

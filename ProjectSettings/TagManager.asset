@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - GenerateShadowCasters
   layers:
   - Default
   - TransparentFX
@@ -15,6 +16,7 @@ TagManager:
   - Enemy
   - 
   - 
+  - Player
   - 
   - 
   - 
@@ -36,12 +38,14 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Garbage
   m_SortingLayers:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: DefaultLight
+  - name: StaticLight
     uniqueID: 51527749
+    locked: 0
+  - name: LevelLight
+    uniqueID: 1175498103
     locked: 0

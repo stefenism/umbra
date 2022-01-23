@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class PlayerStateManager : MonoBehaviour {
-    
+
     private enum PlayerState {
         LIGHT,
         SHADOW,
@@ -9,13 +9,21 @@ public class PlayerStateManager : MonoBehaviour {
         DEAD
     }
 
+    public enum UsingState {
+        BALL,
+        TALLBOY
+    }
+
     public bool HasEnemeyGrappled;
 
     private PlayerState playerState = PlayerState.LIGHT;
+    public UsingState usingState = UsingState.BALL;
     private PlayerMovement mover;
+    private GroundDetect groundDetect;
 
-    private void Awake(){
+    private void Awake() {
         mover = GetComponent<PlayerMovement>();
+        groundDetect = GetComponent<GroundDetect>();
     }
 
     public void InitializeState(PlayerMovement currentPlayer) {
@@ -26,30 +34,35 @@ public class PlayerStateManager : MonoBehaviour {
         Debug.Log("toggling mode");
         if(IsPlayerInLight()){
             SetPlayerOnGround();
-        } else if(IsPlayerInDark()){
+        } else if (IsPlayerInDark()) {
             SetPlayerInLight();
-        } else if(IsPlayerOnGround()){
+        } else if (IsPlayerOnGround()) {
             SetPlayerInDark();
         }
     }
 
     public void SetPlayerInDark(){
         playerState = PlayerState.SHADOW;
+        groundDetect.Initalize(mover.ballBoy.GetComponent<BoxCollider2D>(), mover.ballBoy.transform);
+        groundDetect.groundDistance = .5f;
         mover.setDarknessMode();
     }
 
-    public void SetPlayerInLight(){
+    public void SetPlayerInLight() {
         playerState = PlayerState.LIGHT;
         mover.setLightMode();
     }
 
-    public void SetPlayerOnGround(){
+    public void SetPlayerOnGround() {
         playerState = PlayerState.GROUND;
+        groundDetect.Initalize(mover.tallBoy.GetComponent<BoxCollider2D>(), mover.tallBoy.transform);
+        groundDetect.groundDistance = 1.1f;
         mover.setGroundMode();
     }
 
-    public bool IsPlayerInLight(){return playerState == PlayerState.LIGHT;}
-    public bool IsPlayerInDark(){return playerState == PlayerState.SHADOW;}
-    public bool IsPlayerOnGround(){return playerState == PlayerState.GROUND;}
-    public bool IsPlayerDead(){return playerState == PlayerState.DEAD;}
+    public bool IsPlayerInLight() { return playerState == PlayerState.LIGHT; }
+    public bool IsPlayerInDark() { return playerState == PlayerState.SHADOW; }
+    public bool IsPlayerOnGround() { return playerState == PlayerState.GROUND; }
+    public bool IsPlayerDead() { return playerState == PlayerState.DEAD; }
+
 }

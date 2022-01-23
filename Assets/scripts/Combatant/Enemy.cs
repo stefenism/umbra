@@ -17,6 +17,8 @@ public class Enemy : Combatant
     Animator anim;
     Animator gunAnim;
 
+    public Transform bulletStartPosition;
+
     public bool facingRight = true;
 
     [Header("movement")]
@@ -53,6 +55,7 @@ public class Enemy : Combatant
     public void Start() {
         startingPosition = gameObject.transform.position;
         player = GameManager.gameDaddy.player.gameObject.transform;
+        playerScript = GameManager.gameDaddy.player;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         enemyGun = transform.GetChild(0).GetComponent<EnemyGun>();
@@ -69,10 +72,10 @@ public class Enemy : Combatant
         if(inRange) {
             checkGroundAngle();
 
-            if(enemyGun.isGunShooting()) {
+            // if(enemyGun.isGunShooting()) {
                 Shoot();
-            }
-            target = player.transform.position;
+            // }
+            target = playerScript.currentEnemyTarget();
             StopAllCoroutines();
             ShootTransition();
         } else {
@@ -121,7 +124,7 @@ public class Enemy : Combatant
 
         Vector2 ray = new Vector2(transform.position.x, transform.position.y);
 
-        playerHitPositions = GameManager.gameDaddy.player.getPlayerHitPositions();
+        playerHitPositions = playerScript.getPlayerHitPositions();
 
         foreach(Vector3 hitPosition in playerHitPositions){
 
@@ -177,6 +180,7 @@ public class Enemy : Combatant
     }
 
     void ShootTransition() {
+        Debug.Log("gonna shoot");
         setEnemyShooting();
         //anim.SetBool("Shoot", true);
         checkFacing();
@@ -227,7 +231,7 @@ public class Enemy : Combatant
         if (cooldown > fireRate) {
             cooldown = 0;
 
-            shootStartPoint = enemyGun.transform.position - ((this.transform.right * this.transform.localScale.x )/2);
+            shootStartPoint = bulletStartPosition.position - ((this.transform.right * this.transform.localScale.x )/2);
             bulletTracer.SetPosition(0, shootStartPoint);
             Vector2 endPosition = find_end_point();
             bulletTracer.SetPosition(1, endPosition);
@@ -242,8 +246,11 @@ public class Enemy : Combatant
         float angle = radAngle * Mathf.Rad2Deg + (Mathf.Sign(transform.localRotation.x) * (Mathf.Sign(vectorToTarget.y) * faceOffset));
         angle = Mathf.Clamp(angle, -45f, 45f);
 
+        Debug.Log("gonna rotate gun");
+
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
         Quaternion rotation = Quaternion.Slerp(enemyGun.gameObject.transform.localRotation, q, Time.deltaTime * aimSpeed);
+        Debug.Log("rotation is: " + rotation);
         enemyGun.transform.localRotation = rotation;
     }
 
@@ -267,13 +274,13 @@ public class Enemy : Combatant
         //this.gameObject.transform.rotation = Quaternion.LookRotation(direction);
 
         float orientTransform = transform.position.x;
-        float orientTarget = player.transform.position.x;
+        float orientTarget = playerScript.currentEnemyTarget().x;
         Quaternion newRotation;
 
         if (orientTransform > orientTarget) 
-            newRotation = Quaternion.LookRotation(transform.position - player.transform.position, -Vector3.up);
+            newRotation = Quaternion.LookRotation(transform.position - playerScript.currentEnemyTarget(), -Vector3.up);
         else
-            newRotation = Quaternion.LookRotation(transform.position - player.transform.position, Vector3.up);
+            newRotation = Quaternion.LookRotation(transform.position - playerScript.currentEnemyTarget(), Vector3.up);
 
         newRotation.x = 0.0f;
         newRotation.y = 0.0f;
@@ -301,7 +308,7 @@ public class Enemy : Combatant
     }
 
     public double DistanceToPlayer() {
-        return Vector2.Distance(gameObject.transform.position, player.transform.position);
+        return Vector2.Distance(gameObject.transform.position, playerScript.currentEnemyTarget());
     }
 
 
