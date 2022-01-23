@@ -21,7 +21,7 @@ public class Combatant : MonoBehaviour {
     public LayerMask playerLayer;
 
     public void Start() {
-        player = GameManager.gameDaddy.player.transform;
+        player = FindObjectOfType<Player>().transform;
     }
 
     public virtual void Update() {

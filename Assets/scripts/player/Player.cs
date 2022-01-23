@@ -43,6 +43,12 @@ public class Player : Combatant {
         if (Input.GetMouseButtonDown(0)) {
             GrappleEnemy();
         }
+        if (Input.GetKeyDown("q")) {
+            if (stateManager.usingState == PlayerStateManager.UsingState.BALL)
+                mover.SwitchToTallBoy();
+            else
+                mover.SwitchToBall();
+        }
         //Check for interact key press
     }
 
@@ -52,7 +58,6 @@ public class Player : Combatant {
         if (collision.gameObject.TryGetComponent<InteractableObject>(out InteractableObject interactableObject)) {
             if (!nearObjects.Contains(interactableObject)) {
                 nearObjects.Add(interactableObject);
-                Debug.Log("Foudn interactable");
             }
         }
         if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy)) {

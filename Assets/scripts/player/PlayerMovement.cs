@@ -5,8 +5,10 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     public Rigidbody2D rb;
+
     public GameObject tallBoy;
     public GameObject ballBoy;
+    public GameObject headSetPosition;
     public bool StartAsBall;
 
     public Animator anim;
@@ -50,12 +52,13 @@ public class PlayerMovement : MonoBehaviour {
     public List<Vector3> hitPositions = new List<Vector3>();
 
     private void Awake() {
-        if (StartAsBall) {
-            rb = ballBoy.GetComponent<Rigidbody2D>();
-            //tallBoy.SetActive(false);
+        rb = ballBoy.GetComponent<Rigidbody2D>();
+        if (StartAsBall) { 
+            tallBoy.SetActive(false);
+            ballBoy.SetActive(true);
         } else {
-            rb = tallBoy.GetComponent<Rigidbody2D>();
             ballBoy.SetActive(false);
+            tallBoy.SetActive(true);
         }
 
         playerState = GetComponent<PlayerStateManager>();
@@ -86,6 +89,7 @@ public class PlayerMovement : MonoBehaviour {
             }
 
             if (grounded) {
+                Debug.Log("Setting jump duration");
                 jumpDuration = 0;
             }
         }
@@ -202,6 +206,8 @@ public class PlayerMovement : MonoBehaviour {
 
     public void setDarknessMode() {
         rb.gravityScale = 0;
+        //Play animation to transform to ball
+        SwitchToBall();
     }
 
     public void setLightMode() {
@@ -209,7 +215,8 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     public void setGroundMode() {
-
+        //Play tall boy transformation animation
+        SwitchToTallBoy();
     }
 
     public void setGravityScale(float newScale) { rb.gravityScale = newScale; }
@@ -281,12 +288,17 @@ public class PlayerMovement : MonoBehaviour {
     public void SwitchToTallBoy() {
         rb = tallBoy.GetComponent<Rigidbody2D>();
         ballBoy.SetActive(false);
+        tallBoy.transform.position = ballBoy.transform.position;
+        tallBoy.SetActive(true);
         playerState.usingState = PlayerStateManager.UsingState.TALLBOY;
     }
 
     public void SwitchToBall() {
         rb = ballBoy.GetComponent<Rigidbody2D>();
         tallBoy.SetActive(false);
+        ballBoy.transform.position = headSetPosition.transform.position;
+        ballBoy.SetActive(true);
+
         playerState.usingState = PlayerStateManager.UsingState.BALL;
     }
 
