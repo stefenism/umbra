@@ -139,14 +139,16 @@ public class PlayerMovement : MonoBehaviour {
     private void run() {
         Vector2 newVelocity = rb.velocity;
         newVelocity.x = horizontalMovement * runSpeed;
-        if (!playerState.HasEnemeyGrappled) { //Once a enemy has been grappled, don't flip sprite anymore
-            if (newVelocity.x < 0) {
-                //Moving left, flip sprite
-            } else if (newVelocity.x > 0) { //Don't fiip when 0
-                //Moving 
-            }
-        }
         rb.velocity = newVelocity;
+        if (newVelocity.x > 0 || 0 > newVelocity.x ) {
+            tallAnimator.SetBool("Walking", true);
+            if (playerState.HasEnemeyGrappled) {
+                tallAnimator.SetBool("WalkingBackward", true);
+            }
+        } else {
+            tallAnimator.SetBool("Walking", false);
+            tallAnimator.SetBool("WalkingBackward", false);
+        }
     }
 
     private void fly() {
@@ -220,7 +222,6 @@ public class PlayerMovement : MonoBehaviour {
 
     public void setDarknessMode() {
         rb.gravityScale = 0;
-        //Play animation to transform to ball
         SwitchToBall();
     }
 
@@ -229,7 +230,6 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     public void setGroundMode() {
-        //Play tall boy transformation animation
         rb.gravityScale = 1;
         SwitchToTallBoy();
     }
@@ -306,13 +306,16 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     void Flip() {
-		facingRight = !facingRight;
-
+        facingRight = !facingRight;
         Transform currentObject = GetUsedStateObject().transform;
-		Vector3 theScale = currentObject.transform.localScale;
-		theScale.x *= -1;
-		currentObject.transform.localScale = theScale;
+        Vector3 theScale = currentObject.transform.localScale;
+        theScale.x *= -1;
+        currentObject.transform.localScale = theScale;
+       // tallAnimator.SetBool("Turn", true);
 	}
+
+    public void FinishFlip() { //Don't delete
+    }
 
     public void SwitchToTallBoy() {
         if (!tallBoy.activeSelf) {
@@ -339,7 +342,8 @@ public class PlayerMovement : MonoBehaviour {
             Vector3 theScale = ballBoy.transform.localScale;
             theScale.x = facingRight ? 1 : -1;
             ballBoy.transform.localScale = theScale;
-
+            tallAnimator.SetBool("Walking", false);
+            tallAnimator.SetBool("WalkingBackward", false);
             tallAnimator.SetBool("Fly", true);
             rb.velocity = Vector3.zero;
             killControls = true;

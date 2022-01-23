@@ -25,4 +25,8 @@ public class PlayerEventPasser : MonoBehaviour
     public void StartMovement() {
         player.GetPlayerMovement().ContinuePlayerInput();
     }
+
+    public void FinishTurn() {
+        player.GetPlayerMovement().FinishFlip();
+    }
 }
