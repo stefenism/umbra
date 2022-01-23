@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour {
     private float horizontalMovement;
     private float verticalMovement;
     public PlayerStateManager playerState;
+    public Player playerBrain;
 
     [Header("shadow flight")]
     public float flightSpeed = 1.5f;
@@ -68,6 +69,7 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         playerState = GetComponent<PlayerStateManager>();
+        playerBrain = GetComponent<Player>();
         anim = GetComponent<Animator>();
         boxCollider = ballBoy.GetComponent<BoxCollider2D>();
     }
@@ -76,6 +78,7 @@ public class PlayerMovement : MonoBehaviour {
         checkInput();
 
         checkLightGrounded();
+        checkGrappled();
 
         if (Input.GetKeyDown("b")) {
             playerState.toggleMode();
@@ -83,14 +86,19 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+        Debug.Log("kill controls is:" + killControls);
         if (killControls) {
             return;
         }
-        if (playerState.IsPlayerOnGround()) {
+        Debug.Log("inside fixed update");
+        if (playerState.IsPlayerOnGround() || playerState.IsPlayerGrappling()) {
+            Debug.Log("inside fixed update run");
             run();
 
-            if (jumping) {
-                Jump();
+            if(!playerState.IsPlayerGrappling()){
+                if (jumping) {
+                    Jump();
+                }
             }
 
             if (!grounded && jumping) {
@@ -122,18 +130,30 @@ public class PlayerMovement : MonoBehaviour {
             DetermineJumpButton();
         }
 
-        if (rb.velocity.x > 0.1f && !facingRight) {
-            Flip();
-        } else if (rb.velocity.x < -0.1f && facingRight) {
-            Flip();
+        Debug.Log("is player grappling: " + playerState.IsPlayerGrappling());
+
+        if(!playerState.IsPlayerGrappling()){
+            if(rb.velocity.x > 0.1f && !facingRight) {
+                Flip();
+            }
+            else if(rb.velocity.x < -0.1f && facingRight) {
+                Flip();
+            }
         }
 
         JumpButton();
     }
 
     private void checkLightGrounded() {
-        if (playerState.IsPlayerInLight() && grounded) {
+        if (playerState.IsPlayerInLight() && grounded && !playerState.IsPlayerGrappling()) {
+            Debug.Log("setting player on ground");
             playerState.SetPlayerOnGround();
+        }
+    }
+
+    private void checkGrappled() {
+        if(playerBrain.getGrappledEnemy() != null) {
+            playerState.SetPlayerGrappling();
         }
     }
 
@@ -192,7 +212,6 @@ public class PlayerMovement : MonoBehaviour {
 
     // this could be fly with different values passed in but...game jam
     private void glide() {
-        Debug.Log("blah");
         Vector2 newVelocity = rb.velocity;
 
         if (horizontalMovement != 0) {

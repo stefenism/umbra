@@ -8,6 +8,7 @@ public class Enemy : Combatant
     private enum EnemyState {
         PATROLLING,
         SHOOTING,
+        GRAPPLED,
         DEAD
     }
 
@@ -71,8 +72,10 @@ public class Enemy : Combatant
     }
 
     public override void Update() {
-        if (grappled)
+        if (isEnemyGrappled()){
             return;
+        }
+
         Scan();
         setAnims();
 
@@ -97,8 +100,10 @@ public class Enemy : Combatant
     }
 
     private void FixedUpdate() {
-        if (grappled)
+        if (isEnemyGrappled()){
             return;
+        }
+
         if(isEnemyPatrolling()) {
             moveForward();
         }
@@ -173,7 +178,7 @@ public class Enemy : Combatant
 
             if(hit.collider != null){
                 if(hit.collider.gameObject.tag == "Player"){
-                    if (GameManager.gameDaddy.player.playerState.IsPlayerInLight() || GameManager.gameDaddy.player.playerState.IsPlayerOnGround()){
+                    if (GameManager.gameDaddy.player.playerState.IsPlayerInLight() || GameManager.gameDaddy.player.playerState.IsPlayerOnGround() || GameManager.gameDaddy.player.playerState.IsPlayerGrappling()){
                         if(acceptableLineOfSight){
                             if(!acceptableLineOfSight){
                                 StopAllCoroutines();
@@ -293,9 +298,11 @@ public class Enemy : Combatant
 
     public bool isEnemyShooting(){return enemyState == EnemyState.SHOOTING;}
     public bool isEnemyPatrolling(){return enemyState == EnemyState.PATROLLING;}
+    public bool isEnemyGrappled(){return enemyState == EnemyState.GRAPPLED;}
 
     public void setEnemyPatrolling(){enemyState = EnemyState.PATROLLING;}
     public void setEnemyShooting(){enemyState = EnemyState.SHOOTING;}
+    public void setEnemyGrappled(){enemyState = EnemyState.GRAPPLED;}
     public void setEnemyDead(){enemyState = EnemyState.DEAD;}
 
     public void AimAtPlayer() { //PLEASE FIX ME, I'M RELLY DUMBY
@@ -350,7 +357,13 @@ public class Enemy : Combatant
 
     public void OnGrapple() {
         grappled = true;
-        Debug.Log("Grappled");
+    }
+
+    public void getGrappled(Player player){
+        Vector3 theScale = transform.localScale;
+        theScale.x = player.gameObject.transform.localScale.x;
+        transform.localScale = theScale;
+        setEnemyGrappled();
     }
 
 
