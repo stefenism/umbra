@@ -35,6 +35,7 @@ public class Player : Combatant {
             }
         }
         if (IsInLight()) {
+            Debug.Log("checking if is in light");
             if (!stateManager.IsPlayerInLight() && !stateManager.IsPlayerOnGround() && !stateManager.IsPlayerGrappling()) {
                 stateManager.SetPlayerInLight();
             } 
@@ -42,13 +43,12 @@ public class Player : Combatant {
             if (!stateManager.IsPlayerInDark()) {
                 waiting = true;
                 stateManager.SetPlayerInDark();
-                if (stateManager.HasEnemeyGrappled) {
-                    grappledEnemy.Kill();
-                    grappledEnemy.transform.parent = null;
-                    Destroy(grappledEnemy.gameObject);
-                    stateManager.HasEnemeyGrappled = false;
-                    grappledEnemy = null;
-                }
+                // if (stateManager.HasEnemeyGrappled) {
+                //     grappledEnemy.Kill();
+                //     grappledEnemy.transform.parent = null;
+                //     stateManager.HasEnemeyGrappled = false;
+                //     grappledEnemy = null;
+                // }
             }
         }
 
@@ -107,18 +107,24 @@ public class Player : Combatant {
             enemy.gameObject.transform.parent = mover.tallBoy.transform;
         }else if (stateManager.IsPlayerInDark() && grappledEnemy == null) {
             //Just kill the baddy
-            enemyInRange.Kill();
+            // enemyInRange.Kill();
         }
     }
 
-    public void killEnemy() {
-        if(!grappledEnemy){
+    public void killEnemy(Enemy enemy = null) {
+        if(!grappledEnemy && enemy == null){
             return;
         }
 
-        grappledEnemy.transform.parent = null;
-        Destroy(grappledEnemy.gameObject);
-        grappledEnemy = null;
+        if( enemy != null && !grappledEnemy) {
+            Destroy(enemy.gameObject);
+        } else {
+            Debug.Log("gonna destroy enemy");
+            grappledEnemy.transform.parent = null;
+            Destroy(grappledEnemy.gameObject);
+            grappledEnemy = null;
+        }
+
     }
 
     public bool IsInLight() {
@@ -127,6 +133,10 @@ public class Player : Combatant {
                 return true;
         }
         return false;
+    }
+
+    public void setGrappledEnemy(Enemy enemy){
+        grappledEnemy = enemy;
     }
 
     public Enemy getGrappledEnemy() {

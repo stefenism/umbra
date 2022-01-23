@@ -11,9 +11,17 @@ public class GrappleTrigger : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.TryGetComponent<Enemy>(out Enemy enemy)){
-            Enemy grappledEnemy = enemy;
-            grappledEnemy.getGrappled(playerBrain);
-            playerBrain.doGrapple(enemy);
+            if(GameManager.gameDaddy.player.playerState.IsPlayerOnGround()){
+                Enemy grappledEnemy = enemy;
+                grappledEnemy.getGrappled(playerBrain);
+                playerBrain.doGrapple(enemy);
+            } else if (GameManager.gameDaddy.player.playerState.IsPlayerInDark()){
+                if(enemy.gameObject.activeSelf){
+                    Enemy grappledEnemy = enemy;
+                    playerBrain.setGrappledEnemy(grappledEnemy);
+                    GameManager.gameDaddy.player.explodeEnemy(enemy);
+                }
+            }
         }
     }
 }
