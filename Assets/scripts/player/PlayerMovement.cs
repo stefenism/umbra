@@ -85,6 +85,11 @@ public class PlayerMovement : MonoBehaviour {
         boxCollider = ballBoy.GetComponent<BoxCollider2D>();
     }
 
+    private void Start() {
+        GameManager.gameDaddy.player = this;
+        GameManager.gameDaddy.playerBrain = playerBrain;
+    }
+
     private void Update() {
 
         if(playerState.IsPlayerDead()) {
