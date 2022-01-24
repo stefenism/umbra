@@ -1,9 +1,9 @@
-//using UnityEngine;
-//using UnityEditor;
-//using System.Collections.Generic;
+// using UnityEngine;
+// using UnityEditor;
+// using System.Collections.Generic;
 
-//public class GridShadowCastersGenerator : MonoBehaviour
-//{
+// public class GridShadowCastersGenerator : MonoBehaviour
+// {
 
 //    public string colliderTag = "GenerateShadowCasters";
 //    public GameObject shadowCasterPrefab;
@@ -197,11 +197,11 @@
 
 //        return false;
 //    }
-//}
+// }
 
-//[CustomEditor(typeof(GridShadowCastersGenerator))]
-//public class GridShadowCastersGeneratorEditor : Editor
-//{
+// [CustomEditor(typeof(GridShadowCastersGenerator))]
+// public class GridShadowCastersGeneratorEditor : Editor
+// {
 
 //    public override void OnInspectorGUI()
 //    {
@@ -225,4 +225,4 @@
 //            }
 //        }
 //    }
-//}
+// }

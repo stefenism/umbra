@@ -69,14 +69,14 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Awake() {
         audioSource = GetComponent<AudioSource>();
-        rb = ballBoy.GetComponent<Rigidbody2D>();
         playerState = GetComponent<PlayerStateManager>();
         playerBrain = GetComponent<Player>();
         if (!StartAsBall) {
             rb = tallBoy.GetComponent<Rigidbody2D>();
-            playerState.SetPlayerOnGround();
+            playerState.SetPlayerInLight();
             playerState.usingState = PlayerStateManager.UsingState.TALLBOY;
         } else {
+            rb = ballBoy.GetComponent<Rigidbody2D>();
             ballBoy.SetActive(true);
             tallBoy.SetActive(false);
         }
@@ -101,10 +101,6 @@ public class PlayerMovement : MonoBehaviour {
 
         checkLightGrounded();
         checkGrappled();
-
-        if (Input.GetKeyDown("b")) {
-            playerState.toggleMode();
-        }
     }
 
     private void FixedUpdate() {

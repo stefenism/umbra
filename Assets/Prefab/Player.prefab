@@ -615,7 +615,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: f9c63261ecb3ba1f19c3cacb22bf38b6, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -656,7 +656,7 @@ Animator:
   m_GameObject: {fileID: 7690079353629044843}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e1f57d996631ef443940d7a1ca3d7a6b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1b7936602a47aa644b76b73e5883f4b2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
