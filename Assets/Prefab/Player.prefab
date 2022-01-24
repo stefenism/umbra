@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6099383072779787459}
   - component: {fileID: 7690079354517673842}
   - component: {fileID: 7690079354517673853}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: GrappleTrigger
   m_TagString: Player
   m_Icon: {fileID: 0}
