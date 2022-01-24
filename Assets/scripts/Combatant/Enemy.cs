@@ -256,6 +256,11 @@ public class Enemy : Combatant
         checkFacing();
     }
 
+    void HideBullet()
+    {
+        bulletTracer.enabled = false;
+    }
+
     void check_hit() {
         if(bulletHit.collider == null) {
             return;
@@ -311,7 +316,7 @@ public class Enemy : Combatant
             bulletTracer.SetPosition(1, endPosition);
             bulletTracer.enabled = true;
             PlaySound(ShootAudio, .5f);
-
+            Invoke("HideBullet", 0.3f);
             if(!bulletHit.collider.isTrigger){
                 check_hit();
             }
