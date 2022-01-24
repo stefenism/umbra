@@ -68,6 +68,7 @@ public class PlayerStateManager : MonoBehaviour {
 
     public void SetPlayerDead() {
         Debug.Log("player is dead");
+        mover.PlaySound(mover.DeathSound, .5f);
         playerState = PlayerState.DEAD;
         mover.tallAnimator.SetBool("Dead", true);
     }

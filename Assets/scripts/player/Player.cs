@@ -126,10 +126,12 @@ public class Player : Combatant {
         }
 
         if( enemy != null && !grappledEnemy) {
+            mover.PlaySound(enemy.DeathAudio, 0.75f);
             Destroy(enemy.gameObject);
         } else {
             Debug.Log("gonna destroy enemy");
             grappledEnemy.transform.parent = null;
+            mover.PlaySound(enemy.DeathAudio, 0.75f);
             Destroy(grappledEnemy.gameObject);
             grappledEnemy = null;
         }
