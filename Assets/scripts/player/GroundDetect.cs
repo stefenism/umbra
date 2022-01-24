@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GroundDetect : MonoBehaviour {
 	private PlayerMovement player;
+	private PlayerStateManager stateManager;
 	public float groundDistance;
 	public LayerMask groundLayer;
 
@@ -19,6 +20,7 @@ public class GroundDetect : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = GetComponent<PlayerMovement>();
+		stateManager = GetComponent<PlayerStateManager>();
 
 		width = boxCollider.bounds.extents.x - 0.01f;
 		height = boxCollider.bounds.extents.y + 0.02f;
@@ -75,7 +77,7 @@ public class GroundDetect : MonoBehaviour {
 			{
 				player.grounded = false;
 			}
-			else
+			else if (!stateManager.IsPlayerInDark() && !stateManager.IsPlayerInLight())
 			{
 				player.grounded = true;
 			}
@@ -87,7 +89,7 @@ public class GroundDetect : MonoBehaviour {
 			{
 				player.grounded = false;
 			}
-			else
+			else if(!stateManager.IsPlayerInDark() && !stateManager.IsPlayerInLight())
 			{
 				player.grounded = true;
 			}
