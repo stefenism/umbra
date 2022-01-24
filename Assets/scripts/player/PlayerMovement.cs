@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour {
         rb = ballBoy.GetComponent<Rigidbody2D>();
         playerState = GetComponent<PlayerStateManager>();
         playerBrain = GetComponent<Player>();
-        if (StartAsBall) {
+        if (!StartAsBall) {
             rb = tallBoy.GetComponent<Rigidbody2D>();
             playerState.SetPlayerOnGround();
             playerState.usingState = PlayerStateManager.UsingState.TALLBOY;
