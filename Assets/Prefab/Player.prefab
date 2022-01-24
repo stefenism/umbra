@@ -770,7 +770,7 @@ GameObject:
   - component: {fileID: 7690079354373981685}
   - component: {fileID: 7690079354373981687}
   - component: {fileID: 7690079354373981684}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: killTrigger
   m_TagString: Player
   m_Icon: {fileID: 0}
