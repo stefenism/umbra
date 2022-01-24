@@ -5,7 +5,7 @@ using UnityEngine;
 public class Door : InteractableObject
 {
 
-    public bool RequiresSwitch = false;
+    bool RequiresSwitch = true;
     public GameObject doorObj;
     private Animator animator;
 
