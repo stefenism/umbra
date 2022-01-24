@@ -7,7 +7,7 @@ public class HardCrashGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("HardCrash", 5f);   
+        Invoke("HardCrash", 20f);   
     }
 
     // Update is called once per frame
