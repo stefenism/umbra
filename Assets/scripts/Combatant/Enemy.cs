@@ -394,7 +394,7 @@ public class Enemy : Combatant
 
     private void OnCollisionEnter2D(Collision2D other) {
         if(isEnemyPatrolling()){
-            if(other.gameObject.tag == "Ground" || other.gameObject.tag == "Enemy"){
+            if(other.gameObject.tag == "Ground" || other.gameObject.tag == "Enemy" || other.gameObject.tag == "Door"){
                 Flip();
             }
         }

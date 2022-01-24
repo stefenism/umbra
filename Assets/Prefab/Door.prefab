@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3371791716930479810}
   - component: {fileID: 3371791716930479837}
   - component: {fileID: 6715903371509043671}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: DoorCollision
-  m_TagString: Ground
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
   - {x: -0.25593084, y: 0.9999069, z: 0}
   m_ShapePathHash: 715534500
   m_Mesh: {fileID: 0}
-  m_InstanceId: -444670
+  m_InstanceId: 77208
 --- !u!1 &3371791717250758173
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,9 +98,9 @@ GameObject:
   - component: {fileID: 3371791717250758175}
   - component: {fileID: 1900379758807661041}
   - component: {fileID: 7684589413152586603}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Door
-  m_TagString: Ground
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -210,7 +210,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  RequiresSwitch: 0
   doorObj: {fileID: 3371791716930479811}
   DoorOpenSound: {fileID: 8300000, guid: 331562a40a65bcdbf9c7aa6f78e5f3f1, type: 3}
   VolumeScale: 0.4
