@@ -47,4 +47,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EscapeBuilding.unity
     guid: 08147d326423e574ab2812f3778b00e4
+  - enabled: 1
+    path: Assets/Scenes/WinGame.unity
+    guid: 72adff72cb780ce489a4484660ae8884
   m_configObjects: {}

@@ -101,6 +101,10 @@ public class PlayerMovement : MonoBehaviour {
 
         checkLightGrounded();
         checkGrappled();
+
+        if(Input.GetKeyDown("r")) {
+            GameManager.ReloadCurrentScene();
+        }
     }
 
     private void FixedUpdate() {

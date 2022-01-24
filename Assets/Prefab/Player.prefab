@@ -320,14 +320,14 @@ MonoBehaviour:
   playerState: {fileID: 0}
   playerBrain: {fileID: 0}
   flightSpeed: 3
-  flightAccel: 0.1
-  flightDecel: 0.075
+  flightAccel: 0.15
+  flightDecel: 0.1
   maxFlightSpeed: 6
   verticalGlideSpeed: 0.5
   horizontalGlideSpeed: 2
   glideAccel: 0.075
   glideDecel: 0.075
-  maxVerticalGlideSpeed: 6
+  maxVerticalGlideSpeed: 4
   maxHorizontalGlideSpeed: 6
   glideGravityModifier: 1.5
   runSpeed: 2
