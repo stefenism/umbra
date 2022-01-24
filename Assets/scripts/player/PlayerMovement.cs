@@ -67,20 +67,21 @@ public class PlayerMovement : MonoBehaviour {
     public AudioClip SwitchToBallSound;
     public AudioClip MoveSound; //Not implemented
 
-
     private void Awake() {
         audioSource = GetComponent<AudioSource>();
         rb = ballBoy.GetComponent<Rigidbody2D>();
-        if (StartAsBall) {
-            tallBoy.SetActive(false);
-            ballBoy.SetActive(true);
-        } else {
-            ballBoy.SetActive(false);
-            tallBoy.SetActive(true);
-        }
-
         playerState = GetComponent<PlayerStateManager>();
         playerBrain = GetComponent<Player>();
+        if (!StartAsBall) {
+            rb = tallBoy.GetComponent<Rigidbody2D>();
+            playerState.SetPlayerOnGround();
+            playerState.usingState = PlayerStateManager.UsingState.TALLBOY;
+        } else {
+            ballBoy.SetActive(true);
+            tallBoy.SetActive(false);
+        }
+
+        
         anim = GetComponent<Animator>();
         boxCollider = ballBoy.GetComponent<BoxCollider2D>();
     }
