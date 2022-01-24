@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3371791716930479837}
   m_Layer: 3
   m_Name: DoorCollision
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 7684589413152586603}
   m_Layer: 3
   m_Name: Door
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
