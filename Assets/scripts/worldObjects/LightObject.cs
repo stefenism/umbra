@@ -15,12 +15,12 @@ public class LightObject : MonoBehaviour {
         if (!lightOn) {
             lightObj.enabled = false;
         }
-        //int enLayer = LayerMask.GetMask("Enemy");
-        //int lightLayer = LayerMask.GetMask("Glass");
+        int enLayer = LayerMask.GetMask("Enemy");
+        int lightLayer = LayerMask.GetMask("Glass");
         //var layermask1 = 1 << enLayer;
         //var layermask2 = 1 << lightLayer;
-        //ignoreMask = layermask1 | layermask2;
-        ignoreMask = LayerMask.GetMask("Enemy");
+        ignoreMask = enLayer | lightLayer;
+        //ignoreMask = LayerMask.GetMask("Enemy");
     }
 
     public double GetInnerRaidus() {

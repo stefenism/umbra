@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 670966725251940412}
   - component: {fileID: 6071170838187871192}
   - component: {fileID: 8936492363727789801}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Point Light 2D (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,6 +168,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightOn: 1
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &9058408775865894213
 GameObject:
   m_ObjectHideFlags: 0
