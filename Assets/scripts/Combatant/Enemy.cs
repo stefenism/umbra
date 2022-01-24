@@ -65,8 +65,6 @@ public class Enemy : Combatant
 
     public void Start() {
         startingPosition = gameObject.transform.position;
-        player = GameManager.gameDaddy.player.gameObject.transform;
-        playerScript = GameManager.gameDaddy.player;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         enemyGun = transform.GetChild(0).GetComponent<EnemyGun>();
@@ -74,9 +72,29 @@ public class Enemy : Combatant
         bulletTracer = GetComponentInChildren<LineRenderer>();
         bulletTracer.positionCount = 2;
         bulletTracer.enabled = false;
+
+        player = GameManager.gameDaddy.player.gameObject.transform;
+        playerScript = GameManager.gameDaddy.player;
+    }
+
+    public void checkIfIKnowPlayer() {
+        if(player != null){
+            return;
+        } else if ( playerScript != null) {
+            return;
+        }
+
+        if(player == null) {
+            player = GameManager.gameDaddy.player.gameObject.transform;
+        } 
+        
+        if ( playerScript == null) {
+            playerScript = GameManager.gameDaddy.player;
+        }
     }
 
     public override void Update() {
+        checkIfIKnowPlayer();
         if (isEnemyGrappled()){
             return;
         }
