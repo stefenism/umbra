@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8777156365641305466}
   - component: {fileID: 1747809880468710963}
   - component: {fileID: 6643130099250146345}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: enemyRedux
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ MonoBehaviour:
   playerScript: {fileID: 0}
   playerLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 265
   bulletStartPosition: {fileID: 8777156367388487871}
   noGroundCheckPosition: {fileID: 8777156367187840280}
   checkNoGroundDistance: 1
@@ -379,7 +379,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.027906418
+        value: 0.07
         inSlope: 0
         outSlope: 0
         tangentMode: 0

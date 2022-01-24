@@ -71,6 +71,7 @@ public class PlayerStateManager : MonoBehaviour {
         mover.PlaySound(mover.DeathSound, .5f);
         playerState = PlayerState.DEAD;
         mover.tallAnimator.SetBool("Dead", true);
+        mover.ballAnimator.SetBool("Dead", true);
     }
 
     public bool IsPlayerInLight() { return playerState == PlayerState.LIGHT; }
