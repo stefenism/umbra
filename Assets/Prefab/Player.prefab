@@ -344,7 +344,7 @@ MonoBehaviour:
   grabMan: {fileID: 2513175464145810629, guid: 3b8226464a52ae84aaa169906ce5f588, type: 3}
   audioSource: {fileID: 0}
   GrabEnemySound: {fileID: 8300000, guid: 13fa2a6e3e9a72ee283c26d30eee3de7, type: 3}
-  DeathSound: {fileID: 0}
+  DeathSound: {fileID: 8300000, guid: 3ed2639613a7ed148b093a5f8b25501b, type: 3}
   SwitchToTallSound: {fileID: 8300000, guid: 918e81583cc0c77119f92dfdd082c380, type: 3}
   SwitchToBallSound: {fileID: 8300000, guid: 918e81583cc0c77119f92dfdd082c380, type: 3}
   MoveSound: {fileID: 0}

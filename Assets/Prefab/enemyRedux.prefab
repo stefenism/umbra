@@ -132,8 +132,9 @@ MonoBehaviour:
   LastWalkDistance: 0
   MaxIdleTime: 1
   MinIdleTime: 0.5
-  ShootAudio: {fileID: 0}
-  GunCockAudio: {fileID: 0}
+  ShootAudio: {fileID: 8300000, guid: cfb6ca82c8e62f7d39e383079f32f53b, type: 3}
+  GunCockAudio: {fileID: 8300000, guid: 36a05a8b0214bb3d2b357d1466c9834b, type: 3}
+  DeathAudio: {fileID: 8300000, guid: 94890b5dc771dc739b2a587d02903418, type: 3}
 --- !u!50 &8777156365641305467
 Rigidbody2D:
   serializedVersion: 4

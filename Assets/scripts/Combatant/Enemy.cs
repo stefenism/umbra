@@ -60,6 +60,7 @@ public class Enemy : Combatant
     private AudioSource audioSource;
     public AudioClip ShootAudio;
     public AudioClip GunCockAudio;
+    public AudioClip DeathAudio;
 
 
     public void Start() {
@@ -111,6 +112,11 @@ public class Enemy : Combatant
         if(isEnemyPatrolling()) {
             moveForward();
         }
+    }
+
+    public void playDeathSound() {
+        Debug.Log("playing death sound");
+        PlaySound(DeathAudio, .5f);
     }
 
     void setAnims() {
@@ -286,6 +292,7 @@ public class Enemy : Combatant
             Vector2 endPosition = bulletHit.point;
             bulletTracer.SetPosition(1, endPosition);
             bulletTracer.enabled = true;
+            PlaySound(ShootAudio, .5f);
 
             if(!bulletHit.collider.isTrigger){
                 check_hit();
@@ -388,7 +395,7 @@ public class Enemy : Combatant
         rb.simulated = false;
     }
 
-    public void PlayAudio(AudioClip clip, float VolumeScale) {
+    public void PlaySound(AudioClip clip, float VolumeScale) {
         audioSource.PlayOneShot(clip, VolumeScale);
     }
 
