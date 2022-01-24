@@ -39,7 +39,6 @@ public class Player : Combatant {
             }
         }
         if (IsInLight()) {
-            Debug.Log("checking if is in light");
             if (!stateManager.IsPlayerInLight() && !stateManager.IsPlayerOnGround() && !stateManager.IsPlayerGrappling()) {
                 stateManager.SetPlayerInLight();
             } 
