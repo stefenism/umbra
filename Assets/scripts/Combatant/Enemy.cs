@@ -60,6 +60,7 @@ public class Enemy : Combatant
     private AudioSource audioSource;
     public AudioClip ShootAudio;
     public AudioClip GunCockAudio;
+    public AudioClip DeathAudio;
 
 
     public void Start() {
@@ -111,6 +112,11 @@ public class Enemy : Combatant
         if(isEnemyPatrolling()) {
             moveForward();
         }
+    }
+
+    public void playDeathSound() {
+        Debug.Log("playing death sound");
+        PlaySound(DeathAudio, .5f);
     }
 
     void setAnims() {
@@ -286,6 +292,7 @@ public class Enemy : Combatant
             Vector2 endPosition = bulletHit.point;
             bulletTracer.SetPosition(1, endPosition);
             bulletTracer.enabled = true;
+            PlaySound(ShootAudio, .5f);
 
             if(!bulletHit.collider.isTrigger){
                 check_hit();
@@ -305,14 +312,10 @@ public class Enemy : Combatant
 
     void Flip() {
         rb.velocity = Vector2.zero;
-        Debug.Log("FLIP is happening " + facingRight);
         facingRight = !facingRight;
-        Debug.Log("Scale " + transform.localScale);
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
-        Debug.Log("AFter: " + theScale);
         transform.localScale = theScale;
-
     }
 
     public bool isEnemyShooting(){return enemyState == EnemyState.SHOOTING;}
@@ -368,8 +371,7 @@ public class Enemy : Combatant
 
     private void OnCollisionEnter2D(Collision2D other) {
         if(isEnemyPatrolling()){
-            if(other.gameObject.tag == "Ground"){
-                Debug.Log("FLIPPIN OUT YO");
+            if(other.gameObject.tag == "Ground" || other.gameObject.tag == "Enemy"){
                 Flip();
             }
         }
@@ -388,7 +390,7 @@ public class Enemy : Combatant
         rb.simulated = false;
     }
 
-    public void PlayAudio(AudioClip clip, float VolumeScale) {
+    public void PlaySound(AudioClip clip, float VolumeScale) {
         audioSource.PlayOneShot(clip, VolumeScale);
     }
 
