@@ -77,8 +77,8 @@ public class PlayerMovement : MonoBehaviour {
             playerState.SetPlayerOnGround();
             playerState.usingState = PlayerStateManager.UsingState.TALLBOY;
         } else {
-            //ballBoy.SetActive(false);
-            //tallBoy.SetActive(true);
+            ballBoy.SetActive(true);
+            tallBoy.SetActive(false);
         }
 
         
